@@ -1,9 +1,48 @@
 <!doctype html>
+<?php
+//connetion to database
+require_once('database.php');
+//Get all item (from itemdetails because we need all the item)
+//query to get the item
+$queryItems = 'SELECT itemcategory.itemCatName, item.itemName, memory.memorySize, color.colorName, itemdetails.itemPrice
+FROM itemcategory, item, itemdetails, MEMORY, color
+WHERE itemdetails.itemCatID = itemcategory.itemCatID
+GROUP BY itemDetID';
+$statement= $db->prepare($queryItems);
+$statement->execute();
+$items = $statement->fetchAll();
+$statement->closeCursor();
+//query to get memorysize
+$queryMemory = 'SELECT memorySize FROM memory GROUP BY memorySize';
+$statement1= $db->prepare($queryMemory);
+$statement1->execute();
+$memory = $statement1->fetchAll();
+$statement1->closeCursor();
+//query to get color
+$queryColor = 'SELECT colorName FROM color GROUP BY colorName';
+$statement2= $db->prepare($queryColor);
+$statement2->execute();
+$color = $statement2->fetchAll();
+$statement2->closeCursor();
+//query to get brand
+$queryBrands = 'SELECT itemCatName FROM itemcategory';
+$statement3= $db->prepare($queryBrands);
+$statement3->execute();
+$brands = $statement3->fetchAll();
+$statement3->closeCursor();
+//query to get brand
+$queryCountBrands = 'SELECT COUNT (itemDetID) FROM itemDetails GROUP BY itemCatID';
+$statement4= $db->prepare($queryCountBrands);
+$statement4->execute();
+$brandsCount = $statement4->fetchAll();
+$statement4->closeCursor();
+
+?>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>Cart</title>
+		<title>Shop</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
@@ -43,15 +82,6 @@
 						<li class="menu-item-has-children dropdown">
 							<a href="shop-by-category.html" class="dropdown-hover">Shop <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Category <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-									</ul>
-								</li>
 								<li class="menu-item-has-children dropdown-submenu">
 									<a href="#">Brands/Flagships? <span class="caret"></span></a>
 									<ul class="dropdown-menu">
@@ -240,247 +270,244 @@
 					</div>
 				</div>
 			</header>
-			<div class="heading-container">
-				<div class="container heading-standar">
-					<div class="page-breadcrumb">
-						<ul class="breadcrumb">
-							<li>
-								<span>
-									<a class="home" href="#">
-										<span>Home</span>
-									</a>
-								</span>
-							</li>
-							<li>
-								<span>Cart</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="content-container">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="main-content">
-								<div class="commerce">
-									<form>
-										<table class="table shop_table cart">
-											<thead>
-												<tr>
-													<th class="product-remove hidden-xs">&nbsp;</th>
-													<th class="product-thumbnail hidden-xs">&nbsp;</th>
-													<th class="product-name">Product</th>
-													<th class="product-price text-center">Price</th>
-													<th class="product-quantity text-center">Quantity</th>
-													<th class="product-subtotal text-center hidden-xs">Total</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr class="cart_item">
-													<td class="product-remove hidden-xs">
-														<a href="#" class="remove" title="Remove this item">&times;</a>
-													</td>
-													<td class="product-thumbnail hidden-xs">
-														<a href="shop-detail-1.html">
-															<img width="100" height="150" src="images/products/product_80x80.jpg" alt="Product-2"/>
-														</a>
-													</td>
-													<td class="product-name">
-														<a href="shop-detail-1.html">Cras rhoncus duis viverra</a>
-														<dl class="variation">
-															<dt class="variation-Color">Color:</dt>
-															<dd class="variation-Color"><p>Green</p></dd>
-															<dt class="variation-Size">Size:</dt>
-															<dd class="variation-Size"><p>Extra Large</p></dd>
-														</dl>
-													</td>
-													<td class="product-price text-center">
-														<span class="amount">&#36;22.00</span>
-													</td>
-													<td class="product-quantity text-center">
-														<div class="quantity">
-															<input type="number" step="1" min="0" name="qunatity" value="2" title="Qty" class="input-text qty text" size="4"/>
-														</div>
-													</td>
-													<td class="product-subtotal hidden-xs text-center">
-														<span class="amount">&#36;44.00</span>
-													</td>
-												</tr>
-												<tr class="cart_item">
-													<td class="product-remove hidden-xs">
-														<a href="#" class="remove" title="Remove this item">&times;</a>
-													</td>
-													<td class="product-thumbnail hidden-xs">
-														<a href="shop-detail-1.html">
-															<img width="100" height="150" src="images/products/product_80x80.jpg" alt="Product-3"/>
-														</a>
-													</td>
-													<td class="product-name">
-														<a href="shop-detail-1.html">Creamy Spring Pasta</a>
-														<dl class="variation">
-															<dt class="variation-Color">Color:</dt>
-															<dd class="variation-Color"><p>Green</p></dd>
-															<dt class="variation-Size">Size:</dt>
-															<dd class="variation-Size"><p>Medium</p></dd>
-														</dl>
-													</td>
-													<td class="product-price text-center">
-														<span class="amount">&#36;12.00</span>
-													</td>
-													<td class="product-quantity text-center">
-														<div class="quantity">
-															<input type="number" step="1" min="0" name="quantity" value="1" title="Qty" class="input-text qty text" size="4"/>
-														</div>
-													</td>
-													<td class="product-subtotal hidden-xs text-center">
-														<span class="amount">&#36;12.00</span>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="6" class="actions">
-														<div class="coupon">
-															<label for="coupon_code">Coupon:</label> 
-															<input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code"/> 
-															<input type="submit" class="button rounded" name="apply_coupon" value="Apply Coupon"/>
-														</div>
-														<input type="submit" class="button update-cart-button rounded" name="update_cart" value="Update Cart"/>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
-									<div class="cart-collaterals">
-										<div class="cart_totals">
-											<h2>Cart Totals</h2>
-											<table>
-												<tr class="cart-subtotal">
-													<th>Subtotal</th>
-													<td><span class="amount">&#36;56.00</span></td>
-												</tr>
-												<tr class="shipping">
-													<th>Shipping</th>
-													<td><span class="amount">&#36;0.00</span></td>
-												</tr>
-												<tr class="order-total">
-													<th>Total</th>
-													<td><strong><span class="amount">&#36;56.00</span></strong></td>
-												</tr>
-											</table>
-											<div class="wc-proceed-to-checkout">
-												<a href="#" class="checkout-button button alt wc-forward rounded">Proceed to Checkout</a>
-											</div>
-										</div>
-										<div class="cross-sells">
-											<h2>You may be interested in&hellip;</h2>
-											<ul class="products columns-2">
-												<li class="product style-2">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.jpg" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.jpg" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:100%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Florence Knoll Credenza</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">£17.50</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
+			<div class="heading-container heading-resize heading-no-button">
+				<div class="heading-background heading-parallax bg-shop">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="heading-wrap">
+									<div class="page-title">
+										<h1>SMARTPHONES</h1>
+										<div class="page-breadcrumb">
+											<ul class="breadcrumb">
+												<li>
+													<span><a class="home" href="#"><span>Home</span></a></span>
 												</li>
-												<li class="product style-2">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.jpg" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.jpg" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:100%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Citterio Grand Repos</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">£12.00</span>
-																				–
-																				<span class="amount">£20.00</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
+												<li>
+													<span><a href="#"><span>Shop</span></a></span> 
+												</li>
+												<li>
+													<span>Smartphones</span>
 												</li>
 											</ul>
 										</div>
 									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content-container commerce page-layout-left-sidebar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9 main-wrap">
+							<div class="main-content">
+								<div class="shop-toolbar">
+									<form class="commerce-ordering clearfix">
+										<div class="commerce-ordering-select">
+											<label class="hide">Sorting:</label>
+											<div class="form-flat-select">
+												<select name="orderby" class="orderby">
+													<option value="" selected='selected'>Default sorting</option>
+													<option value="">Sort by popularity</option>
+													<option value="">Sort by average rating</option>
+													<option value="">Sort by newness</option>
+													<option value="">Sort by price: low to high</option>
+													<option value="">Sort by price: high to low</option>
+												</select>
+												<i class="fa fa-angle-down"></i>
+											</div>
+										</div>
+										<div class="commerce-ordering-select">
+											<label class="hide">Show:</label>
+											<div class="form-flat-select">
+												<select name="per_page" class="per_page">
+													<option value="" selected='selected'>12</option>
+													<option value="">24</option>
+													<option value="">36</option>
+												</select>
+												<i class="fa fa-angle-down"></i>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="shop-loop grid">
+									<ul class="products">
+										<?php foreach ($items as $itemDetails) :  ?>
+										<li class="product product-no-border style-2 col-md-3 col-sm-6">
+											<div class="product-container">		
+												<figure>
+													<div class="product-wrap">
+														<div class="product-images">
+															<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
+																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.jpg" alt=""/></a>
+															</div>
+															<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
+																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.jpg" alt=""/></a>
+															</div>
+														</div>
+													</div>
+													<figcaption>
+														<div class="shop-loop-product-info">
+															<div class="info-meta clearfix">
+																<div class="star-rating">
+																	<span style="width:0%"></span>
+																</div>
+																<div class="loop-add-to-wishlist">
+																	<div class="yith-wcwl-add-to-wishlist">
+                                                                        <div class="yith-wcwl-add-button">
+                                                                            <a href="#" class="add_to_wishlist">
+                                                                                Add to Wishlist
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+															</div>
+															<div class="info-content-wrap">
+																<h3 class="product_title">
+																	<a href="shop-detail-1.html"><?php echo $itemDetails['itemCatName']; ?> <?php echo $itemDetails['itemName']; ?></a>
+																</h3>
+																<div class="info-price">
+																	<span class="price">
+																		<span class="amount">£<?php echo $itemDetails['itemPrice']; ?></span>
+																	</span>
+																</div>
+																<div class="loop-action">
+																	<div class="loop-add-to-cart">
+																		<a href="#" class="add_to_cart_button">
+																			Add to cart
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</figcaption>
+												</figure>
+											</div>
+										</li>
+										<?php endforeach; ?>
+									</ul>
+								</div>
+								<nav class="commerce-pagination">
+									<p class="commerce-result-count">
+										Showing 1&ndash;12 of 14 results
+									</p>
+									<div class="paginate">
+										<div class="paginate_links">
+											<span class='page-numbers current'>1</span>
+											<a class='page-numbers' href='#'>2</a>
+											<a class="next page-numbers" href="#">
+												<i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+									</div>
+								</nav>
+							</div>
+						</div>
+						<div class="col-md-3 sidebar-wrap">
+							<div class="main-sidebar">
+								<div class="widget commerce widget_product_search">
+									<h4 class="widget-title">
+										<span>Product Search</span>
+									</h4>
+									<form class="commerce-product-search">
+										<label class="screen-reader-text" for="s">Search for:</label>
+										<input type="search" class="search-field rounded" placeholder="Search Products&hellip;" value="" name="s"/>
+										<input type="submit" value="Search"/>
+									</form>
+								</div>
+								<div class="widget widget_layered_nav">
+									<h4 class="widget-title">
+										<span>Filter by Color</span>
+									</h4>
+									<ul>
+										<!--Adding selection for color -->
+										<?php foreach ($color as $colorName) : ?>
+										<li>
+											<a href="#"><?php echo $colorName['colorName']; ?></a> 
+											<span class="count">(1)</span>
+										</li>
+										<?php endforeach ; ?>
+									</ul>
+								</div>
+								<div class="widget widget_price_filter">
+									<h4 class="widget-title"><span>Price</span></h4>
+									<form>
+										<div class="price_slider_wrapper">
+											<div class="price_slider"></div>
+											<div class="price_slider_amount">
+												<input type="text" id="min_price" name="min_price" value="" data-min="10" placeholder="Min price"/>
+												<input type="text" id="max_price" name="max_price" value="" data-max="732" placeholder="Max price"/>
+												<button type="submit" class="button">Filter</button>
+												<div class="price_label">
+													Price: <span class="from"></span> &mdash; <span class="to"></span>
+												</div>
+												<div class="clear"></div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="widget widget_layered_nav">
+									<h4 class="widget-title"><span>Brands</span></h4>
+									<ul>
+										<!--Adding selection for brand -->
+										<?php foreach ($brands as $brandName) : ?>
+										<li>
+											<a href="#"><?php echo $brandName['itemCatName']; ?></a> <small class="count">0</small>
+										</li>
+										<?php endforeach ; ?>
+									</ul>
+								</div>
+								<div class="widget widget_product_categories">
+									<h4 class="widget-title"><span>Memory</span></h4>
+									<ul class="product-categories">
+										<!--Adding selection for memory -->
+										<?php foreach ($memory as $memorySize) : ?>
+										<li><a href="#"><?php echo $memorySize['memorySize']; ?> GB</a></li>
+										<?php endforeach; ?>
+									</ul>
+								</div>
+								<div class="widget widget_products">
+									<h4 class="widget-title"><span>Best Sellers</span></h4>
+									<ul class="product_list_widget">
+										<li>
+											<a href="shop-detail-1.html">
+												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-1"/> 
+												<span class="product-title">Donec tincidunt justo</span>
+											</a>
+											<del><span class="amount">20.50&#36;</span></del> 
+											<ins><span class="amount">19.00&#36;</span></ins>
+										</li>
+										<li>
+											<a href="shop-detail-1.html">
+												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-2"/> 
+												<span class="product-title">Mauris egestas</span>
+											</a>
+											<span class="amount">14.95&#36;</span>
+										</li>
+										<li>
+											<a href="shop-detail-1.html">
+												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-9"/> 
+												<span class="product-title">Morbi fermentum</span>
+											</a>
+											<span class="amount">17.45&#36;</span>
+										</li>
+										<li>
+											<a href="shop-detail-1.html">
+												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-8"/> 
+												<span class="product-title">Morbi fermentum</span>
+											</a>
+											<span class="amount">23.00&#36;</span>
+										</li>
+										<li>
+											<a href="shop-detail-1.html">
+												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-7"/> 
+												<span class="product-title">Ut quis Aenean</span>
+											</a>
+											<span class="amount">10.95&#36;</span>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
@@ -744,53 +771,13 @@
 			</div>
 			<div class="minicart-side-content">
 				<div class="minicart">
-					<div class="minicart-header">
-						4 items in the shopping cart
-					</div>
-					<div class="minicart-body">
-						<div class="cart-product clearfix">
-							<div class="cart-product-image">
-								<a class="cart-product-img" href="#">
-									<img width="300" height="300" src="images/products/product_80x80.jpg" alt=""/>
-								</a>
-							</div>
-							<div class="cart-product-details">
-								<div class="cart-product-title">
-									<a href="#">Cras rhoncus duis viverra</a>
-								</div>
-								<div class="cart-product-quantity-price">
-									1 x <span class="amount">&pound;321.00</span>
-								</div>
-							</div>
-							<a href="#" class="remove" title="Remove this item">&times;</a>
-						</div>
-						<div class="cart-product clearfix">
-							<div class="cart-product-image">
-								<a class="cart-product-img" href="#">
-									<img width="300" height="300" src="images/products/product_80x80.jpg" alt=""/>
-								</a>
-							</div>
-							<div class="cart-product-details">
-								<div class="cart-product-title">
-									<a href="#">Donec tincidunt justo</a>
-								</div>
-								<div class="cart-product-quantity-price">
-									3 x <span class="amount">&pound;19.00</span>
-								</div>
-							</div>
-							<a href="#" class="remove" title="Remove this item">&times;</a>
-						</div>
+					<div class="minicart-header no-items show">
+						Your shopping bag is empty.
 					</div>
 					<div class="minicart-footer">
-						<div class="minicart-total">
-							Cart Subtotal <span class="amount">&pound;378.00</span>
-						</div>
 						<div class="minicart-actions clearfix">
-							<a class="viewcart-button button" href="#">
-								<span class="text">View Cart</span>
-							</a>
-							<a class="checkout-button button" href="#">
-								<span class="text">Checkout</span>
+							<a class="button no-item-button" href="#">
+								<span class="text">Go to the shop</span>
 							</a>
 						</div>
 					</div>
@@ -815,5 +802,13 @@
 		<script type="text/javascript" src="js/jquery.transit.min.js"></script>
 		<script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
 		<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
+		<script type="text/javascript" src="js/jquery.parallax.js"></script>
+
+		<script type="text/javascript" src="js/core.min.js"></script>
+		<script type="text/javascript" src="js/widget.min.js"></script>
+		<script type="text/javascript" src="js/mouse.min.js"></script>
+		<script type="text/javascript" src="js/slider.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-touch-punch.min.js"></script>
+		<script type="text/javascript" src="js/price-slider.js"></script>
 	</body>
 </html>

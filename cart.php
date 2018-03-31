@@ -1,3 +1,24 @@
+<?php
+require_once('database.php');
+//Select all the item from basket table
+//query to get the item
+$queryBasketItem = 'SELECT itemCategory.itemCatName, itemdetails.itemDetID, basket.itemID, item.itemName, itemdetails.itemPrice, basket.itemBasketQTY, color.colorName, basket.colorID, basket.itemCatID, basket.memoryID, memory.memorySize, basket.itemBasketPrice, basket.basketItemID
+FROM basket
+INNER JOIN itemCategory ON itemCategory.itemCatID = basket.itemCatID
+INNER JOIN item ON item.itemID = basket.itemID
+INNER JOIN color ON color.colorID = basket.colorID
+INNER JOIN MEMORY ON memory.memoryID = basket.memoryID
+INNER JOIN itemDetails ON itemdetails.itemDetID = basket.itemDetID
+WHERE userID = 1
+GROUP BY basketItemID;';
+$statement= $db->prepare($queryBasketItem);
+$statement->execute();
+$basket = $statement->fetchAll();
+$statement->closeCursor();
+//get the sum quantity for the same item
+
+?>
+
 <!doctype html>
 <html lang="en-US">
 	<head>
@@ -277,9 +298,18 @@
 												</tr>
 											</thead>
 											<tbody>
+												<?php foreach ($basket as $basketItem) : ?>
 												<tr class="cart_item">
 													<td class="product-remove hidden-xs">
-														<a href="#" class="remove" title="Remove this item">&times;</a>
+														<form title="Remove this item" action="removeItem.php" method="post">&times;
+															<input type="hidden" name="item_id" value="<?php echo $basketItem['itemID']; ?>">
+															<input type="hidden" name="item_cat_id" value="<?php echo $basketItem['itemCatID']; ?>">
+															<input type="hidden" name="memory_id" value="<?php echo $basketItem['memoryID']; ?>">
+															<input type="hidden" name="color_id" value="<?php echo $basketItem['colorID']; ?>">
+															<input type="hidden" name="item_det_id" value="<?php echo $basketItem['itemDetID']; ?>">
+															<input type="hidden" name="basket_item_id" value="<?php echo $basketItem['basketItemID']; ?>">
+															<input type="submit" value="&times;" class="remove">
+														</form>
 													</td>
 													<td class="product-thumbnail hidden-xs">
 														<a href="shop-detail-1.html">
@@ -287,56 +317,27 @@
 														</a>
 													</td>
 													<td class="product-name">
-														<a href="shop-detail-1.html">Cras rhoncus duis viverra</a>
+														<a href="shop-detail-1.html"><?php echo $basketItem['itemCatName']; ?> <?php echo $basketItem['itemName']; ?></a>
 														<dl class="variation">
 															<dt class="variation-Color">Color:</dt>
-															<dd class="variation-Color"><p>Green</p></dd>
-															<dt class="variation-Size">Size:</dt>
-															<dd class="variation-Size"><p>Extra Large</p></dd>
+															<dd class="variation-Color"><p><?php echo $basketItem['colorName']; ?></p></dd>
+															<dt class="variation-Size">Memory:</dt>
+															<dd class="variation-Size"><p><?php echo $basketItem['memorySize']; ?> GB</p></dd>
 														</dl>
 													</td>
 													<td class="product-price text-center">
-														<span class="amount">&#36;22.00</span>
+														<span class="amount">&#36;<?php echo $basketItem['itemPrice']; ?></span>
 													</td>
 													<td class="product-quantity text-center">
 														<div class="quantity">
-															<input type="number" step="1" min="0" name="qunatity" value="2" title="Qty" class="input-text qty text" size="4"/>
+															<input type="number" step="1" min="0" name="qunatity" value="<?php echo $basketItem['itemBasketQTY']; ?>" title="Qty" class="input-text qty text" size="4"/>
 														</div>
 													</td>
 													<td class="product-subtotal hidden-xs text-center">
-														<span class="amount">&#36;44.00</span>
+														<span class="amount">&#36;<?php echo $basketItem['itemBasketQTY']*$basketItem['itemPrice']; ?></span>
 													</td>
 												</tr>
-												<tr class="cart_item">
-													<td class="product-remove hidden-xs">
-														<a href="#" class="remove" title="Remove this item">&times;</a>
-													</td>
-													<td class="product-thumbnail hidden-xs">
-														<a href="shop-detail-1.html">
-															<img width="100" height="150" src="images/products/product_80x80.jpg" alt="Product-3"/>
-														</a>
-													</td>
-													<td class="product-name">
-														<a href="shop-detail-1.html">Creamy Spring Pasta</a>
-														<dl class="variation">
-															<dt class="variation-Color">Color:</dt>
-															<dd class="variation-Color"><p>Green</p></dd>
-															<dt class="variation-Size">Size:</dt>
-															<dd class="variation-Size"><p>Medium</p></dd>
-														</dl>
-													</td>
-													<td class="product-price text-center">
-														<span class="amount">&#36;12.00</span>
-													</td>
-													<td class="product-quantity text-center">
-														<div class="quantity">
-															<input type="number" step="1" min="0" name="quantity" value="1" title="Qty" class="input-text qty text" size="4"/>
-														</div>
-													</td>
-													<td class="product-subtotal hidden-xs text-center">
-														<span class="amount">&#36;12.00</span>
-													</td>
-												</tr>
+												<?php endforeach; ?>
 												<tr>
 													<td colspan="6" class="actions">
 														<div class="coupon">
@@ -356,7 +357,7 @@
 											<table>
 												<tr class="cart-subtotal">
 													<th>Subtotal</th>
-													<td><span class="amount">&#36;56.00</span></td>
+													<td><span class="amount">&#36;<?php echo $totaleBasket; ?></span></td>
 												</tr>
 												<tr class="shipping">
 													<th>Shipping</th>

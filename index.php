@@ -1,4 +1,33 @@
 <!doctype html>
+<?php
+//This statement is to connect to the database
+require_once('database.php');
+// Get all categoryType
+$queryAllcategorytype = 'SELECT * FROM itemcategory ORDER BY itemCatID';
+$statement2 = $db->prepare($queryAllcategorytype);
+$statement2->execute();
+$categorytype = $statement2->fetchAll();
+$statement2->closeCursor();
+// Get categoryType ID
+if (!isset($itemCategoryID)) {$itemCategoryID = filter_input(INPUT_GET, 'itemCategoryID', FILTER_VALIDATE_INT);
+if ($itemCategoryID == NULL || $itemCategoryID == FALSE) {$itemCategoryID = 0;}}
+// Get name for selected categoryType
+$queryCategoryType = 'SELECT * FROM itemcategory WHERE itemCatID = :itemCategoryID';
+$statement1 = $db->prepare($queryCategoryType);
+$statement1->bindValue(':itemCategoryID', $itemCategoryID);
+$statement1->execute();
+$categoryType = $statement1->fetch();
+$categoryType_name = $categoryType['itemCatName'];
+$statement1->closeCursor();
+
+//query to get the item
+$queryAllItem = 'SELECT itemCategory.itemCatName, item.itemName, item.itemCatID, item.itemID, item.frontImg, item.backImg
+FROM item INNER JOIN itemCategory ON itemCategory.itemCatID = item.itemCatID AND item.itemCatID = itemcategory.itemCatID';
+$statement3= $db->prepare($queryAllItem);
+$statement3->execute();
+$item = $statement3->fetchAll();
+$statement3->closeCursor();
+?>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -6,21 +35,19 @@
 		<title>Homepage</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
-		<link rel='stylesheet' href='css/settings.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/bootstrap.min.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/swatches-and-photos.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/prettyPhoto.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/jquery.selectBox.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/font-awesome.min.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic%7CCrimson+Text:400,400italic,600,600italic,700,700italic' type='text/css' media='all'/>
+		<link rel="stylesheet" href="css/settings.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/swatches-and-photos.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/jquery.selectBox.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic%7CCrimson+Text:400,400italic,600,600italic,700,700italic" type="text/css" media="all"/>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
-		<link rel='stylesheet' href='css/elegant-icon.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/style.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/commerce.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/custom.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/magnific-popup.css' type='text/css' media='all'/>
-
-		
+		<link rel="stylesheet" href="css/elegant-icon.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/commerce.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all"/>
 	</head>
 	<body>
 		<div class="offcanvas open">
@@ -1124,30 +1151,28 @@
 										<div class="masonry-filter">
 											<div class="filter-action filter-action-center">
 												<ul data-filter-key="filter">
-													<li>
-														<a data-masonry-toogle="selected" href="#" data-filter-value=".maecenas">Flagships</a>
+													<?php foreach ($categorytype as $categoryType) : ?>
+													<li><a data-masonry-toogle="selected" href="#" data-filter-value=".<?php echo $categoryType['itemCatName']; ?>"><?php echo $categoryType['itemCatName']; ?>
+													</a>											
 													</li>
-													<li>
-														<a href="#" data-filter-value=".nulla">Samsung</a>
-													</li>
-													<li>
-														<a href="#" data-filter-value=".donec">Apple</a>
-													</li>
+													<?php endforeach; ?>
 												</ul>
 											</div>
 										</div>
 										<div class="products-masonry-wrap">
 											<ul class="products masonry-products row masonry-wrap">
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 maecenas donec">
+												<?php foreach ($item as $allItems) : ?>
+												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 flagships <?php echo $allItems['itemCatName']; ?>"><!--add instead of donec the code to extract the category of the code-->
 													<div class="product-container">
 														<figure>
 															<div class="product-wrap">
 																<div class="product-images">
 																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
+																		<!--to add more value use &namevalue=value(that can be the phpcode-->
+																		<a href="shop-detail.php?item_id=<?php echo $allItems['itemID']; ?>&item_cat_id=<?php echo $allItems['itemCatID']; ?>"><img width="450" height="450" src="images/products/<?php echo $allItems['frontImg']; ?>" alt=""/></a>
 																	</div>
 																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
+																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/<?php echo $allItems['backImg']; ?>" alt=""/></a>
 																	</div>
 																</div>
 															</div>
@@ -1169,11 +1194,12 @@
 																	</div>
 																	<div class="info-content-wrap">
 																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Schultz Petal Dining</a>
+																			<a href="shop-detail-1.html"><?php echo $allItems['itemCatName'] ?> <?php echo $allItems['itemName'] ?></a>
 																		</h3>
+																		<!--DELETE THIS DIV-->
 																		<div class="info-price">
 																			<span class="price">
-																				<span class="amount">&pound;17.45</span>
+																				<span class="amount">&pound;<?php echo $allItems['itemPrice'] ?></span>
 																			</span>
 																		</div>
 																		<div class="loop-action">
@@ -1189,369 +1215,7 @@
 														</figure>
 													</div>
 												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 nulla maecenas">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:0%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Jens Risom Lounge</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">&pound;17.45</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 nulla maecenas">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:0%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Hans Wegner Shell Chair</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">&pound;10.75</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 maecenas donec">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:0%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Jaime Hayon Ro Chair</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">&pound;32.00</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 maecenas donec">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:0%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Saarinen Womb Chair</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">&pound;123.00</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 maecenas">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:80%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Citterio Grand Repos</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<span class="amount">£12.00</span>
-																				–
-																				<span class="amount">£20.00</span>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 nulla maecenas donec">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<span class="onsale">Sale!</span>
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:80%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Arne Jacobsen Oxford Chair</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<del><span class="amount">£20.50</span></del> 
-																				<ins><span class="amount">£19.00</span></ins>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
-												<li class="product masonry-item product-no-border style-2 col-md-3 col-sm-6 nulla maecenas">
-													<div class="product-container">
-														<figure>
-															<div class="product-wrap">
-																<div class="product-images">
-																	<span class="onsale">Sale!</span>
-																	<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.png" alt=""/></a>
-																	</div>
-																	<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																		<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.png" alt=""/></a>
-																	</div>
-																</div>
-															</div>
-															<figcaption>
-																<div class="shop-loop-product-info">
-																	<div class="info-meta clearfix">
-																		<div class="star-rating">
-																			<span style="width:80%"></span>
-																		</div>
-																		<div class="loop-add-to-wishlist">
-																			<div class="yith-wcwl-add-to-wishlist">
-		                                                                        <div class="yith-wcwl-add-button">
-		                                                                            <a href="#" class="add_to_wishlist">
-		                                                                                Add to Wishlist
-		                                                                            </a>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                </div>
-																	</div>
-																	<div class="info-content-wrap">
-																		<h3 class="product_title">
-																			<a href="shop-detail-1.html">Charles Pollock Executive</a>
-																		</h3>
-																		<div class="info-price">
-																			<span class="price">
-																				<del><span class="amount">£20.50</span></del> 
-																				<ins><span class="amount">£19.00</span></ins>
-																			</span>
-																		</div>
-																		<div class="loop-action">
-																			<div class="loop-add-to-cart">
-																				<a href="#" class="add_to_cart_button">
-																					Add to cart
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</figcaption>
-														</figure>
-													</div>
-												</li>
+												<?php endforeach; ?>
 											</ul>
 										</div>
 									</div>
@@ -2136,7 +1800,7 @@
 		<div class="modal fade user-register-modal" id="userregisterModal" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form id="userregisterModalForm">
+					<form id="userregisterModalForm" action="user_registration.php" method="post">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -2151,16 +1815,24 @@
 							</div>
 							<div class="user-login-or"><span>or</span></div>
 							<div class="form-group">
-								<label>Username</label>
-								<input type="text" name="user_login" required class="form-control" value="" placeholder="Username">
+								<label>First Name</label>
+								<input type="text" id="firstName" name="firstName" required class="form-control" value="" placeholder="Username">
+							</div>
+							<div class="form-group">
+								<label>Middle Name</label>
+								<input type="text" id="middleName" name="middleName" required class="form-control" value="" placeholder="Username">
+							</div>
+							<div class="form-group">
+								<label>Last Name</label>
+								<input type="text" id="lastName" name="lastName"  required class="form-control" value="" placeholder="Username">
 							</div>
 							<div class="form-group">
 								<label for="user_email">Email</label>
-								<input type="email" id="user_email" name="user_email" required class="form-control" value="" placeholder="Email">
+								<input type="email" id="email" name="email" required class="form-control" value="" placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="user_password">Password</label>
-								<input type="password" id="user_password" required value="" name="user_password" class="form-control" placeholder="Password">
+								<input type="password" id="pass" required value="" name="pass" class="form-control" placeholder="Password">
 							</div>
 							<div class="form-group">
 								<label for="user_password">Retype password</label>
@@ -2223,35 +1895,35 @@
 			</div>
 		</div>
 
-		<script type='text/javascript' src='js/jquery.js'></script>
-		<script type='text/javascript' src='js/jquery-migrate.min.js'></script>
-		<script type='text/javascript' src='js/jquery.themepunch.tools.min.js'></script>
-		<script type='text/javascript' src='js/jquery.themepunch.revolution.min.js'></script>
-		<script type='text/javascript' src='js/easing.min.js'></script>
-		<script type='text/javascript' src='js/imagesloaded.pkgd.min.js'></script>
-		<script type='text/javascript' src='js/bootstrap.min.js'></script>
-		<script type='text/javascript' src='js/superfish-1.7.4.min.js'></script>
-		<script type='text/javascript' src='js/jquery.appear.min.js'></script>
-		<script type='text/javascript' src='js/script.js'></script>
-		<script type='text/javascript' src='js/swatches-and-photos.js'></script>
-		<script type='text/javascript' src='js/jquery.cookie.min.js'></script>
-		<script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
-		<script type='text/javascript' src='js/jquery.prettyPhoto.init.min.js'></script>
-		<script type='text/javascript' src='js/jquery.selectBox.min.js'></script>
-		<script type='text/javascript' src='js/jquery.touchSwipe.min.js'></script>
-		<script type='text/javascript' src='js/jquery.transit.min.js'></script>
-		<script type='text/javascript' src='js/jquery.carouFredSel.js'></script>
-		<script type='text/javascript' src='js/jquery.magnific-popup.js'></script>
-		<script type='text/javascript' src='js/isotope.pkgd.min.js'></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-migrate.min.js"></script>
+		<script type="text/javascript" src="js/jquery.themepunch.tools.min.js"></script>
+		<script type="text/javascript" src="js/jquery.themepunch.revolution.min.js"></script>
+		<script type="text/javascript" src="js/easing.min.js"></script>
+		<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/superfish-1.7.4.min.js"></script>
+		<script type="text/javascript" src="js/jquery.appear.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script type="text/javascript" src="js/swatches-and-photos.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+		<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+		<script type="text/javascript" src="js/jquery.prettyPhoto.init.min.js"></script>
+		<script type="text/javascript" src="js/jquery.selectBox.min.js"></script>
+		<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="js/jquery.transit.min.js"></script>
+		<script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+		<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
+		<script type="text/javascript" src="js/isotope.pkgd.min.js"></script>
 
-		<script type='text/javascript' src='js/extensions/revolution.extension.video.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.slideanims.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.actions.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.layeranimation.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.kenburn.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.navigation.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.migration.min.js'></script>
-		<script type='text/javascript' src='js/extensions/revolution.extension.parallax.min.js'></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.video.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.slideanims.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.actions.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.layeranimation.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.kenburn.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.navigation.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.migration.min.js"></script>
+		<script type="text/javascript" src="js/extensions/revolution.extension.parallax.min.js"></script>
 		<script type="text/javascript">
 
 			var tpj=jQuery;

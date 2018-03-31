@@ -1,3 +1,62 @@
+<?php
+require_once('database.php');
+//Get Variable
+$item_cat_id = $_GET['item_cat_id'];
+$item_id = $_GET['item_id'];
+// Get all categoryType
+$queryAllcategorytype = 'SELECT * FROM itemcategory ORDER BY itemCatID';
+$statement2 = $db->prepare($queryAllcategorytype);
+$statement2->execute();
+$categorytype = $statement2->fetchAll();
+$statement2->closeCursor();
+// Get name for selected categoryType
+$queryCategoryType = 'SELECT * FROM itemcategory WHERE itemCatID = :item_cat_id';
+$statement1 = $db->prepare($queryCategoryType);
+$statement1->bindValue(':item_cat_id', $item_cat_id);
+$statement1->execute();
+$categoryType = $statement1->fetch();
+$statement1->closeCursor();
+// Get details item for selected categoryType and itemID
+$queryItemType = 'SELECT * FROM item WHERE itemCatID = :item_cat_id AND itemID = :item_id';
+$statement3 = $db->prepare($queryItemType);
+$statement3->bindValue(':item_cat_id', $item_cat_id);
+$statement3->bindValue(':item_id', $item_id);
+$statement3->execute();
+$itemType = $statement3->fetch();
+$statement3->closeCursor();
+//Get memory and price
+$queryMemoAndPrice = 'SELECT memorySize, itemPrice FROM memory WHERE itemCatID = :item_cat_id AND itemID = :item_id';
+$statement4 = $db->prepare($queryMemoAndPrice);
+$statement4->bindValue(':item_cat_id', $item_cat_id);
+$statement4->bindValue(':item_id', $item_id);
+$statement4->execute();
+$queryMeAndPrice = $statement4->fetchAll();
+$statement4->closeCursor();
+//Get Memory and Price And Color for specific Item (from Item Details that is the item available in stock!)
+$queryDetMemAndPriceAndColor = 'SELECT memory.memorySize, itemdetails.memoryID, itemdetails.itemCatID, itemdetails.itemID, memory.itemPrice, color.colorName, itemdetails.colorID, itemdetails.itemDetID
+FROM itemdetails
+INNER JOIN memory ON memory.memoryID = itemdetails.memoryID 
+INNER JOIN color ON color.colorID = itemdetails.colorID
+WHERE itemdetails.itemCatID = :item_cat_id AND itemdetails.itemID = :item_id AND itemdetails.itemQty >0';
+$stmt = $db->prepare($queryDetMemAndPriceAndColor);
+$stmt->bindValue(':item_cat_id', $item_cat_id);
+$stmt->bindValue(':item_id', $item_id);
+$stmt->execute();
+$queryDetMeAndCo = $stmt->fetchAll();
+$stmt->closeCursor();	
+//get colors for a specific item
+$querycolor = 'SELECT * FROM color WHERE itemCatID = :item_cat_id AND itemID = :item_id';
+$statement5 = $db->prepare($querycolor);
+$statement5->bindValue(':item_cat_id', $item_cat_id);
+$statement5->bindValue(':item_id', $item_id);
+$statement5->execute();
+$queryColors = $statement5->fetchAll();
+$statement5->closeCursor();
+//get memory
+$state1 = 'SELECT itemDetails.memoryID, memory.memorySize, memory.itemPrice from itemDetails, memory
+WHERE itemDetails.memoryID = memory.memoryID
+AND itemCatID = :item_cat_id AND itemID = :item_id'
+?>
 <!doctype html>
 <html lang="en-US">
 	<head>
@@ -269,19 +328,18 @@
 											<div class="row summary-container">
 												<div class="col-md-7 col-sm-6 entry-image">
 													<div class="single-product-images">
-														<span class="onsale">Sale!</span>
 														<div class="single-product-images-slider">
 															<div class="caroufredsel product-images-slider" data-synchronise=".single-product-images-slider-synchronise" data-scrollduration="500" data-height="variable" data-scroll-fx="none" data-visible="1" data-circular="1" data-responsive="1">
 																<div class="caroufredsel-wrap">
 																	<ul class="caroufredsel-items">
 																		<li class="caroufredsel-item">
-																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/detail/detail_800x800.jpg" alt=""/>
+																			<a src="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
+																				<img width="600" height="685" src="images/products/product_328x328.png" alt=""/>
 																			</a>
 																		</li>
 																		<li class="caroufredsel-item">
 																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/detail/detail_800x800.jpg" alt=""/>
+																				<img width="600" height="685" src="images/products/product_328x328alt.png" alt=""/>
 																			</a>
 																		</li>
 																		<li class="caroufredsel-item">
@@ -312,14 +370,14 @@
 																		<li class="caroufredsel-item selected">
 																			<div class="thumb">
 																				<a href="#" data-rel="0">
-																					<img width="300" height="300" src="images/products/thumb/product_72x72.jpg" alt=""/>
+																					<img width="300" height="300" src="images/products/product_328x328.png" alt=""/>
 																				</a>
 																			</div>
 																		</li>
 																		<li class="caroufredsel-item">
 																			<div class="thumb">
 																				<a href="#" data-rel="1">
-																					<img width="300" height="300" src="images/products/thumb/product_72x72.jpg" alt=""/>
+																					<img width="300" height="300" src="images/products/product_328x328alt.png" alt=""/>
 																				</a>
 																			</div>
 																		</li>
@@ -345,28 +403,27 @@
 												</div>
 												<div class="col-md-5 col-sm-6 entry-summary">
 													<div class="summary">
-														<h1 class="product_title entry-title">SAMSUNG GALAXY S9</h1>
+														<h1 class="product_title entry-title"><?php echo $categoryType['itemCatName']; ?> <?php echo $itemType['itemName']; ?></h1>
 														<p class="price">
-															<del>
-																<span class="amount">&pound;800.50</span>
-															</del> 
-															<ins>
-																<span class="amount">&pound;700.00</span>
-															</ins>
-														</p>
-														<div class="product-excerpt">
-															<p>
-																Proin malesuada enim nulla, nec bibendum justo vestibulum non. Duis et ipsum convallis, bibendum enim a, hendrerit diam. Praesent tellus mi, vehicula et risus eget, laoreet tristique tortor. Fusce id metus eget nibh imperdiet fermentum non in metus.
-															</p>
+														Phone Type
 														</div>
-														<form class="cart">
-															<div class="add-to-cart-table">
-																<div class="quantity">
-																	<input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4"/>
-																</div>
-																<button type="submit" class="button">Add to cart</button>
-															</div>
-														</form>
+														<!--put the following in a checkbox selection, with the quantity box (as input) on the side-->
+													<?php foreach ($queryDetMeAndCo as $memoryAndPrice) : ?>
+													<form class="cart" id="addToBasket" action="addToBasket.php" method="post">	
+															<input type="hidden" name="user_id" id="user_id" value="1">
+															<input type="hidden" name="item_id" id="item_id" value="<?php echo $memoryAndPrice['itemID']; ?>">
+															<input type="hidden" name="item_cat_id" id="item_cat_id" value="<?php echo $memoryAndPrice['itemCatID']; ?>">
+															<input type="hidden" name="item_det_id" id="item_det_id" value="<?php echo $memoryAndPrice['itemDetID']; ?>">
+															<input type="hidden" name="memory_id" id="memory_id" value="<?php echo $memoryAndPrice['memoryID']; ?>">
+															<input type="hidden" name="color_id" id="color_id" value="<?php echo $memoryAndPrice['colorID']; ?>">
+															<input type="hidden" name="item_price" id="item_price" value="<?php echo $memoryAndPrice['itemPrice']; ?>">
+															<span><?php echo $memoryAndPrice['memorySize']; ?>GB - <?php echo $memoryAndPrice['itemPrice']; ?> - <?php echo $memoryAndPrice['colorName']; ?></span><br>
+															<input type="number" id="item_qty_basket" step="1" min="1" name="item_qty_basket" title="Qty" class="input-text qty text" size="4"/>
+														<div class="add-to-cart-table">															
+															<button type="submit" class="button">Add to cart</button>
+														</div>
+													</form>
+													<?php endforeach; ?>
 														<p><a href="#"><strong>Add to Wishlist</strong></a></p>
 														<div class="clear"></div>
 														<!--<div class="product_meta">
@@ -380,7 +437,7 @@
 															</span>
 														</div>-->
 														
-														<!--<div class="share-links">
+														<div class="share-links">
 															<div class="share-icons">
 																<span class="facebook-share">
 																	<a href="#" title="Share on Facebook">
@@ -403,7 +460,7 @@
 																	</a>
 																</span>
 															</div>
-														</div> -->
+														</div> 
 													</div> 
 												</div>
 											</div>
@@ -422,7 +479,18 @@
 													  	</ul>
 													  	<div class="tab-content">
 													    	<div id="tab-1" class="tab-pane fade in active">
-													    		<h2>Product Description</h2>
+													    		<h3>Item Description: </h3><?php echo $itemType['itemDescription']; ?>
+													    		<h3>Release Date: </h3><?php echo $itemType['releaseDate']; ?>
+													    		<h3>Weight: </h3><?php echo $itemType['weight']; ?>
+													    		<h3>Wide: </h3><?php echo $itemType['wide']; ?>
+													    		<h3>Operating System: </h3><?php echo $itemType['operatingSystem']; ?>
+													    		<h3>Screen Size: </h3><?php echo $itemType['screenSize']; ?>
+													    		<h3>Camera: </h3><?php echo $itemType['camera']; ?>
+													    		<h3>Ram Memory: </h3><?php echo $itemType['ramMemory']; ?>
+													    		<h3>Battery: </h3><?php echo $itemType['battery']; ?>
+													    		<h3>Resolution: </h3><?php echo $itemType['resolution']; ?>
+													    		<h3>Processor: </h3><?php echo $itemType['processor']; 	 ?>
+													    		<h3>Product Description: </h3>
 																<h3>Nullam vulputate erat id enim lacinia</h3>
 																<h3></h3>
 																<p>Vel rutrum odio bibendum. Vestibulum quis metus euismod, porta odio et, lacinia eros. Vestibulum vel lobortis ligula, non mollis diam. Donec eu urna quis nibh consectetur pharetra eget vitae dolor. Duis volutpat orci at</p>
