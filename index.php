@@ -186,6 +186,7 @@ $statement3->closeCursor();
 											<nav class="collapse navbar-collapse primary-navbar-collapse">
 												<ul class="nav navbar-nav primary-nav">
 													<li><a href="index.html"><span class="underline">Home</span></a></li>
+													
 													<!--<li class="current-menu-item menu-item-has-children dropdown">
 														<a href="./" class="dropdown-hover">
 															<span class="underline">Home</span> <span class="caret"></span>
@@ -1128,7 +1129,9 @@ $statement3->closeCursor();
 									<div class="col-sm-7 pt-12">
 										<p class="white italic size-15 mb-0">The new</p>
 										<h2 class="custom_heading white mt-0">Nokia 8 Sirrocco</h2>
-										<p class="white">Lorem ipsum dolor sit amet, natum aeterno sanctus ei per, fastidii torquatos nam ex. Amet vitae prodesset ut qui, labores civibus appellantur pri ei, pro cu tation dissentias. An per quando ornatus platonem, suas prodesset vel ad. Quas laoreet cotidieque cum ut, vix et insolens explicari corrumpit. Simul commodo et has, te tempor recusabo mea, eam sumo fabulas definiebas eu. No scripta legendos liberavisse vis.</p>
+										<p class="white">Nokia has, with the Nokia 8 Sirocco created a robust phone, which they say is unbendable. Having been carved out of a single piece of stainless steel, machined for hours into a solid, yet uniquely slim and compact shape. With this strength it is a phone you can depend on.<br><br>
+
+It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, which is captivating and robust. With an improved specification to exceed even the most demanding requirements. Including 6G RAM, 128GB internal storage and the latest version of Android Oreo in its pure form.</p>
 									</div>
 									<div class="col-sm-5 pb-3">
 										<div class="special-product">
@@ -1199,7 +1202,7 @@ $statement3->closeCursor();
 																		<!--DELETE THIS DIV-->
 																		<div class="info-price">
 																			<span class="price">
-																				<span class="amount">&pound;<?php echo $allItems['itemPrice'] ?></span>
+																				<span class="amount">&zwnj;</span> <!--temporary solution for button css problem (invisible character) -->
 																			</span>
 																		</div>
 																		<div class="loop-action">
@@ -1395,21 +1398,21 @@ $statement3->closeCursor();
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/nokia.png" class="grayscale">
 													</a>
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/samsung.png" class="grayscale">
 													</a>
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/apple.png" class="grayscale">
 													</a>
 												</div>
 											</div>
@@ -1418,21 +1421,21 @@ $statement3->closeCursor();
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/oneplus.png" class="grayscale">
 													</a>
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/lg.png" class="grayscale">
 													</a>
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-6">
 												<div class="client-item">
 													<a target="_blank" href="#">
-														<img alt="" src="images/brand/brand.png" class="grayscale">
+														<img alt="" src="images/brand/huawei.png" class="grayscale">
 													</a>
 												</div>
 											</div>
@@ -1449,15 +1452,15 @@ $statement3->closeCursor();
 														<div class="testimonial-wrap">
 															<div class="testimonial-text">
 																<span>&ldquo;</span>
-																Sed a mollis libero. Sed aliquet, tortor vel effics itur finibus, nunc felis hendrerit nula non auct or lectus erat vel magna.
+																When I need a new phone, I go straight to PhoneBits, because I know they are always reliable and fast.
 																<span>&rdquo;</span>
 															</div>
 															<div class="clearfix">
 																<div class="testimonial-avatar">
-																	<img src="images/avatar/thumb_50x50.jpeg" alt=""/>
+																	<img src="images/avatar/client1.jpeg" alt=""/>
 																</div>
-																<span class="testimonial-author">tony task</span>
-																<span class="testimonial-company">Manager Director</span>
+																<span class="testimonial-author">Alexander Mach</span>
+																<span class="testimonial-company">Client</span>
 															</div>
 														</div>
 													</li>
@@ -1465,15 +1468,15 @@ $statement3->closeCursor();
 														<div class="testimonial-wrap">
 															<div class="testimonial-text">
 																<span>&ldquo;</span>
-																Sed a mollis libero. Sed aliquet, tortor vel effics itur finibus, nunc felis hendrerit nula non auct or lectus erat vel magna.
+																I love the PhoneBits website. It's so easy to buy new products from them.
 																<span>&rdquo;</span>
 															</div>
 															<div class="clearfix">
 																<div class="testimonial-avatar">
-																	<img src="images/avatar/thumb_50x50.jpg" alt=""/>
+																	<img src="images/avatar/client2.jpg" alt=""/>
 																</div>
-																<span class="testimonial-author">John Smith</span>
-																<span class="testimonial-company">CEO</span>
+																<span class="testimonial-author">Michael Hen</span>
+																<span class="testimonial-company">Client</span>
 															</div>
 														</div>
 													</li>
