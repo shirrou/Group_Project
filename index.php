@@ -477,23 +477,23 @@ $statement4->closeCursor();
 								<div class="policy-featured-col col-md-4 col-sm-6">
 									<i class="fa fa-money"></i>
 									<h4 class="policy-featured-title">
-										100% <br> return money
+										100% <br> Return Money
 									</h4>
-									free return standard order in 30 days 
+									Free return standard order in 30 days 
 								</div>
 								<div class="policy-featured-col col-md-4 col-sm-6">
 									<i class="fa fa-globe"></i>
 									<h4 class="policy-featured-title">
-										world wide <br> delivery
+										World Wide <br> Delivery
 									</h4>
-									free ship for payment over £100 
+									Free ship for payment over £100 
 								</div>
 								<div class="policy-featured-col col-md-4 col-sm-6">
 									<i class="fa fa-clock-o"></i>
 									<h4 class="policy-featured-title">
-										24h <br> shipment 
+										24h <br> Shipment 
 									</h4>
-									for standard package 
+									For standard package 
 								</div>
 							</div>
 						</div>
@@ -541,6 +541,11 @@ $statement4->closeCursor();
 																			<h3 class="product_title">
 																				<a href="shop-detail.php?item_id=<?php echo $arrivals['itemID'];?>&item_cat_id=<?php echo $arrivals['itemCatID'];?>"><?php echo $arrivals['itemCatName']; ?> <?php echo $arrivals['itemName']; ?></a>
 																			</h3>
+																			<div class="info-price">
+																			<span class="price">
+																				<span class="amount">&zwnj;</span> <!--temporary solution for button css problem (invisible character) -->
+																			</span>
+																		</div>
 																			<div class="loop-action">
 																				<div class="loop-add-to-cart">
 																					<a href="#" class="add_to_cart_button">
@@ -567,14 +572,14 @@ $statement4->closeCursor();
 						<div class="container-full">
 							<div class="row row-fluid custom-bg-2 mb-5">
 								<div class="container">
-									<div class="col-sm-7 pt-12">
+									<div class="col-sm-7 pt-9">
 										<p class="white italic size-15 mb-0">The new</p>
 										<h2 class="custom_heading white mt-0">Nokia 8 Sirrocco</h2>
 										<p class="white">Nokia has, with the Nokia 8 Sirocco created a robust phone, which they say is unbendable. Having been carved out of a single piece of stainless steel, machined for hours into a solid, yet uniquely slim and compact shape. With this strength it is a phone you can depend on.<br><br>
 
 It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, which is captivating and robust. With an improved specification to exceed even the most demanding requirements. Including 6G RAM, 128GB internal storage and the latest version of Android Oreo in its pure form.</p>
 									</div>
-									<div class="col-sm-5 pb-3">
+									<div class="col-sm-5">
 										<div class="special-product">
 											<div class="special-product-wrap">
 												<div class="special-product-image">
@@ -640,7 +645,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 																		<h3 class="product_title">
 																			<a href="shop-detail-1.html"><?php echo $allItems['itemCatName'] ?> <?php echo $allItems['itemName'] ?></a>
 																		</h3>
-																		<!--DELETE THIS DIV-->
+																		
 																		<div class="info-price">
 																			<span class="price">
 																				<span class="amount">&zwnj;</span> <!--temporary solution for button css problem (invisible character) -->
@@ -1083,21 +1088,21 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								<h4 class="footer-featured-title">
 									100% <br> return money
 								</h4>
-								free return standard order in 30 days 
+								Free return standard order in 30 days 
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-globe"></i>
 								<h4 class="footer-featured-title">
 									world wide <br> delivery
 								</h4>
-								free ship for payment over £100
+								Free ship for payment over £100
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-clock-o"></i>
 								<h4 class="footer-featured-title">
 									24h <br> shipment 
 								</h4>
-								for standard package 
+								For standard package 
 							</div>
 						</div>
 					</div>
@@ -1163,15 +1168,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								</div>
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_text">
-										<!--<h3 class="widget-title">
-											<span>open house</span>
-										</h3>
-										<div class="textwidget">
-											<ul class="open-time">
-												<li><span>Mon - Fri:</span><span>8am - 5pm</span> </li>
-												<li><span>Sat:</span><span>8am - 11am</span> </li>
-												<li><span>Sun: </span><span>Closed</span></li>
-											</ul>-->
+										
 											<h3 class="widget-title">
 												<span>payment Menthod</span>
 											</h3>
