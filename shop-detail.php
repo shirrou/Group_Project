@@ -37,7 +37,7 @@ $queryDetMemAndPriceAndColor = 'SELECT memory.memorySize, itemdetails.memoryID, 
 FROM itemdetails
 INNER JOIN memory ON memory.memoryID = itemdetails.memoryID 
 INNER JOIN color ON color.colorID = itemdetails.colorID
-WHERE itemdetails.itemCatID = :item_cat_id AND itemdetails.itemID = :item_id AND itemdetails.itemQty >0';
+WHERE itemdetails.itemCatID = :item_cat_id AND itemdetails.itemID = :item_id AND itemdetails.itemQty >0 AND itemdetails.itemID= memory.itemID';
 $stmt = $db->prepare($queryDetMemAndPriceAndColor);
 $stmt->bindValue(':item_cat_id', $item_cat_id);
 $stmt->bindValue(':item_id', $item_id);
@@ -52,10 +52,15 @@ $statement5->bindValue(':item_id', $item_id);
 $statement5->execute();
 $queryColors = $statement5->fetchAll();
 $statement5->closeCursor();
-//get memory
-$state1 = 'SELECT itemDetails.memoryID, memory.memorySize, memory.itemPrice from itemDetails, memory
-WHERE itemDetails.memoryID = memory.memoryID
-AND itemCatID = :item_cat_id AND itemID = :item_id'
+//get picture
+$querypic = 'SELECT * FROM item
+WHERE itemCatID = :item_cat_id AND itemID = :item_id';
+$statement6 = $db->prepare($querypic);
+$statement6->bindValue(':item_cat_id', $item_cat_id);
+$statement6->bindValue(':item_id', $item_id);
+$statement6->execute();
+$query_pic = $statement6->fetch();
+$statement6->closeCursor();
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -332,31 +337,28 @@ AND itemCatID = :item_cat_id AND itemID = :item_id'
 															<div class="caroufredsel product-images-slider" data-synchronise=".single-product-images-slider-synchronise" data-scrollduration="500" data-height="variable" data-scroll-fx="none" data-visible="1" data-circular="1" data-responsive="1">
 																<div class="caroufredsel-wrap">
 																	<ul class="caroufredsel-items">
+																		<!--for large pictures-->
 																		<li class="caroufredsel-item">
-																			<a src="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/product_328x328.png" alt=""/>
+																			<a href="images/products/<?php echo $query_pic['carPic1']; ?>" src="images/products/product_328x328.png" data-rel="magnific-popup-verticalfit">
+																				<img width="600" height="685" src="images/products/<?php echo $query_pic['carPic1']; ?>" alt=""/>
 																			</a>
 																		</li>
 																		<li class="caroufredsel-item">
-																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/product_328x328alt.png" alt=""/>
+																			<a href="images/products/<?php echo $query_pic['carPic2']; ?>" data-rel="magnific-popup-verticalfit">
+																				<img width="600" height="685" src="images/products/<?php echo $query_pic['carPic2']; ?>" alt=""/>
 																			</a>
 																		</li>
 																		<li class="caroufredsel-item">
-																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/detail/detail_800x800.jpg" alt=""/>
+																			<a href="images/products/<?php echo $query_pic['carPic3']; ?>" data-rel="magnific-popup-verticalfit">
+																				<img width="600" height="685" src="images/products/<?php echo $query_pic['carPic3']; ?>" alt=""/>
 																			</a>
 																		</li>
 																		<li class="caroufredsel-item">
-																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/detail/detail_800x800.jpg" alt=""/>
+																			<a href="images/products/<?php echo $query_pic['carPic4']; ?>" data-rel="magnific-popup-verticalfit">
+																				<img width="600" height="685" src="images/products/<?php echo $query_pic['carPic4']; ?>" alt=""/>
 																			</a>
 																		</li>
-																		<li class="caroufredsel-item">
-																			<a href="images/products/detail/detail_800x800.jpg" data-rel="magnific-popup-verticalfit">
-																				<img width="600" height="685" src="images/products/detail/detail_800x800.jpg" alt=""/>
-																			</a>
-																		</li>
+																		
 																	</ul>
 																	<a href="#" class="caroufredsel-prev"></a>
 																	<a href="#" class="caroufredsel-next"></a>
@@ -367,31 +369,33 @@ AND itemCatID = :item_cat_id AND itemID = :item_id'
 															<div class="caroufredsel product-thumbnails-slider" data-visible-min="2" data-visible-max="4" data-scrollduration="500" data-direction="up" data-height="100%" data-circular="1" data-responsive="0">
 																<div class="caroufredsel-wrap">
 																	<ul class="single-product-images-slider-synchronise caroufredsel-items">
+																		<!--for small picture on the side-->
 																		<li class="caroufredsel-item selected">
 																			<div class="thumb">
 																				<a href="#" data-rel="0">
-																					<img width="300" height="300" src="images/products/product_328x328.png" alt=""/>
+																					<img width="300" height="300" src="images/products/<?php echo $query_pic['carPic1']; ?>" alt=""/>
 																				</a>
 																			</div>
 																		</li>
+																		
 																		<li class="caroufredsel-item">
 																			<div class="thumb">
 																				<a href="#" data-rel="1">
-																					<img width="300" height="300" src="images/products/product_328x328alt.png" alt=""/>
+																					<img width="300" height="300" src="images/products/<?php echo $query_pic['carPic2']; ?>" alt=""/>
 																				</a>
 																			</div>
 																		</li>
 																		<li class="caroufredsel-item">
 																			<div class="thumb">
 																				<a href="#" data-rel="2">
-																					<img width="300" height="300" src="images/products/thumb/product_72x72.jpg" alt=""/>
+																					<img width="300" height="300" src="images/products/<?php echo $query_pic['carPic3']; ?>" alt=""/>
 																				</a>
 																			</div>
 																		</li>
 																		<li class="caroufredsel-item">
 																			<div class="thumb">
 																				<a href="#" data-rel="3">
-																					<img width="300" height="300" src="images/products/thumb/product_72x72.jpg" alt=""/>
+																					<img width="300" height="300" src="images/products/<?php echo $query_pic['carPic4']; ?>" alt=""/>
 																				</a>
 																			</div>
 																		</li>
@@ -423,7 +427,7 @@ AND itemCatID = :item_cat_id AND itemID = :item_id'
 															<button type="submit" class="button">Add to cart</button>
 														</div>
 													</form>
-													<?php endforeach; ?>
+													<?php endforeach; ?>		
 														<p><a href="#"><strong>Add to Wishlist</strong></a></p>
 														<div class="clear"></div>
 														<!--<div class="product_meta">
