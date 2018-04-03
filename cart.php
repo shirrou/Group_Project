@@ -2,7 +2,7 @@
 require_once('database.php');
 //Select all the item from basket table
 //query to get the item
-$queryBasketItem = 'SELECT itemCategory.itemCatName, itemdetails.itemDetID, basket.itemID, item.itemName, itemdetails.itemPrice, basket.itemBasketQTY, color.colorName, basket.colorID, basket.itemCatID, basket.memoryID, memory.memorySize, basket.itemBasketPrice, basket.basketItemID
+$queryBasketItem = 'SELECT itemCategory.itemCatName, itemdetails.itemDetID, basket.itemID, item.itemName, itemdetails.itemPrice, basket.itemBasketQTY, color.colorName, basket.colorID, basket.itemCatID, basket.memoryID, memory.memorySize, basket.itemBasketPrice, basket.basketItemID, item.frontImg
 FROM basket
 INNER JOIN itemCategory ON itemCategory.itemCatID = basket.itemCatID
 INNER JOIN item ON item.itemID = basket.itemID
@@ -312,12 +312,12 @@ $statement->closeCursor();
 														</form>
 													</td>
 													<td class="product-thumbnail hidden-xs">
-														<a href="shop-detail-1.html">
-															<img width="100" height="150" src="images/products/product_80x80.jpg" alt="Product-2"/>
+														<a href="shop-detail.php?item_id=<?php echo $basketItem['itemID']; ?>&item_cat_id=<?php echo $basketItem['itemCatID']; ?>">
+															<img width="100" height="150" src="images/products/<?php echo $basketItem['frontImg']; ?>" alt="Product-2"/>
 														</a>
 													</td>
 													<td class="product-name">
-														<a href="shop-detail-1.html"><?php echo $basketItem['itemCatName']; ?> <?php echo $basketItem['itemName']; ?></a>
+														<a href="shop-detail.php?item_id=<?php echo $basketItem['itemID']; ?>&item_cat_id=<?php echo $basketItem['itemCatID']; ?>"><?php echo $basketItem['itemCatName']; ?> <?php echo $basketItem['itemName']; ?></a>
 														<dl class="variation">
 															<dt class="variation-Color">Color:</dt>
 															<dd class="variation-Color"><p><?php echo $basketItem['colorName']; ?></p></dd>
