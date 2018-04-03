@@ -1,29 +1,34 @@
 <!doctype html>
+<?php
+require_once('database.php');
+// Get all details for Account
+$queryAccount = 'SELECT * FROM user WHERE userID = 1';
+$statement = $db->prepare($queryAccount);
+$statement->execute();
+$accountInfo = $statement->fetch();
+$statement->closeCursor();
+
+?>
+
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>PhoneBits | My Wishlist</title>
+		<title>My Account | PhoneBits</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
-		<link rel='stylesheet' href='css/bootstrap.min.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/swatches-and-photos.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/prettyPhoto.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/jquery.selectBox.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/font-awesome.min.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic%7CCrimson+Text:400,400italic,600,600italic,700,700italic' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/elegant-icon.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/style.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/commerce.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/custom.css' type='text/css' media='all'/>
-		<link rel='stylesheet' href='css/magnific-popup.css' type='text/css' media='all'/>
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/swatches-and-photos.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/jquery.selectBox.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic%7CCrimson+Text:400,400italic,600,600italic,700,700italic" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/elegant-icon.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/commerce.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all"/>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
 	</head>
 	<body>
 		<div class="offcanvas open">
@@ -65,7 +70,7 @@
 									<a href="#">Features <span class="caret"></span></a>
 									<ul class="dropdown-menu">
 										<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
+																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
 																	<li><a href="my-account.html">My Account</a></li>
 																	<li><a href="cart.html">Cart</a></li>
 																	<li><a href="cart-empty.html">Empty Cart</a></li>
@@ -77,7 +82,15 @@
 								</li>
 							</ul>
 						</li>
-						
+						<!--<li><a href="collection.html">Collections</a></li>
+						<li class="menu-item-has-children dropdown">
+							<a href="#" class="dropdown-hover">Blog <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="blog-default.html">Blog Default</a></li>
+								<li><a href="blog-center.html">Blog Center</a></li>
+								<li><a href="blog-masonry.html">Blog Masonry</a></li>
+							</ul>
+						</li>-->
 						<li class="menu-item-has-children dropdown">
 							<a href="#" class="dropdown-hover">Pages <span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -172,7 +185,7 @@
 																<h3 class="megamenu-title">Features <span class="caret"></span></h3>
 																<ul class="dropdown-menu">
 																	<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
+																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
 																	<li><a href="my-account.html">My Account</a></li>
 																	<li><a href="cart.html">Cart</a></li>
 																	<li><a href="cart-empty.html">Empty Cart</a></li>
@@ -252,7 +265,7 @@
 								</span>
 							</li>
 							<li>
-								<span>My Wishlist</span>
+								<span>My Account</span>
 							</li>
 						</ul>
 					</div>
@@ -263,78 +276,27 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="main-content">
-								<form class="commerce">
-									<div class="wishlist-title ">
-										<h2>My wishlist</h2>
-									</div>
-									<table class="shop_table cart wishlist_table">
-										<thead>
-											<tr>
-												<th class="product-remove"></th>
-												<th class="product-thumbnail"></th>
-												<th class="product-name"><span class="nobr">Phone Name</span></th>
-												<th class="product-price"><span class="nobr">Price </span></th>
-												<th class="product-stock-stauts"><span class="nobr">Stock Status </span></th>
-												<th class="product-add-to-cart"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="product-remove">
-													<a href="#" class="remove remove_from_wishlist">&times;</a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="shop-detail-1.html">
-														<img width="100" height="150" src="images/products/product_328x328.png" alt="Product-1"/>
-													</a>
-												</td>
-												<td class="product-name">
-													<a href="shop-detail-1.html">Samsung Galaxy S9</a>
-												</td>
-												<td class="product-price">
-													<span class="amount">
-														£699</span>
-													</span>
-												</td>
-												<td class="product-stock-status">
-													<span class="wishlist-in-stock">In Stock</span>
-												</td>
-												<td class="product-add-to-cart">
-											 		<a href="#" class="add_to_cart_button button rounded"> Add to cart</a>
-												</td>
-											</tr>
-											<tr>
-												<td class="product-remove">
-													<a href="#" class="remove remove_from_wishlist">&times;</a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="shop-detail-1.html">
-														<img width="100" height="150" src="images/products/huaweiMate10Front.png" alt="Product-2"/>
-													</a>
-												</td>
-												<td class="product-name">
-													<a href="shop-detail-1.html">Huawei Mate 10</a>
-												</td>
-												<td class="product-price">
-													<span class="amount">
-														£599</span>
-													
-												</td>
-												<td class="product-stock-status">
-													<span class="wishlist-in-stock">In Stock</span>
-												</td>
-												<td class="product-add-to-cart">
-											 		<a href="#" class="add_to_cart_button button rounded"> Add to cart</a>
-												</td>
-											</tr>
-										</tbody>
-										<tfoot>
-											<tr>
-												<td colspan="6">&nbsp;</td>
-											</tr>
-										</tfoot>
-									</table>
-								</form>
+								<div class="col-sm-6">
+									<div class="content_element title">
+												<h2>My Account</h2>
+											</div><br>
+								
+									<h3 class="heading-left-custom">First Name</h3>
+									<p><?php echo $accountInfo['firstName']; ?></p>
+									<h3 class="heading-left-custom">Middle Name</h3>
+									<p><?php echo $accountInfo['midName']; ?></p>
+									<h3 class="heading-left-custom">Last Name</h3>
+									<p> <?php echo $accountInfo['lastName']; ?> </p>
+									<h3 class="heading-left-custom">Email</h3>
+									<p><?php echo $accountInfo['email']; ?> </p>
+									<h3 class="heading-left-custom">Address 1</h3>
+									<p><?php echo $accountInfo['addressLine1']; ?></p>
+									<h3 class="heading-left-custom">Address 2</h3>
+									<p><?php echo $accountInfo['addressLine2']; ?></p>
+									<h3 class="heading-left-custom">Postcode</h3>
+									<p><?php echo $accountInfo['postCode']; ?></p>
+								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -363,21 +325,21 @@
 								<h4 class="footer-featured-title">
 									100% <br> return money
 								</h4>
-								free return standard order in 30 days 
+								Free return standard order in 30 days 
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-globe"></i>
 								<h4 class="footer-featured-title">
 									world wide <br> delivery
 								</h4>
-								free ship for payment over $100
+								Free ship for payment over £100
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-clock-o"></i>
 								<h4 class="footer-featured-title">
 									24h <br> shipment 
 								</h4>
-								for standard package 
+								For standard package 
 							</div>
 						</div>
 					</div>
@@ -443,15 +405,7 @@
 								</div>
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_text">
-										<!--<h3 class="widget-title">
-											<span>open house</span>
-										</h3>
-										<div class="textwidget">
-											<ul class="open-time">
-												<li><span>Mon - Fri:</span><span>8am - 5pm</span> </li>
-												<li><span>Sat:</span><span>8am - 11am</span> </li>
-												<li><span>Sun: </span><span>Closed</span></li>
-											</ul>-->
+										
 											<h3 class="widget-title">
 												<span>payment Menthod</span>
 											</h3>
@@ -471,7 +425,7 @@
 					</div>
 				</div>
 				<div class="footer-copyright text-center">
-					© 2018 GROUP PROJECT
+					© 2018 Group Project 
 				</div>
 			</footer>
 		</div>
@@ -611,23 +565,22 @@
 			</div>
 		</div>
 
-		<script type='text/javascript' src='js/jquery.js'></script>
-		<script type='text/javascript' src='js/jquery-migrate.min.js'></script>
-		<script type='text/javascript' src='js/easing.min.js'></script>
-		<script type='text/javascript' src='js/imagesloaded.pkgd.min.js'></script>
-		<script type='text/javascript' src='js/bootstrap.min.js'></script>
-		<script type='text/javascript' src='js/superfish-1.7.4.min.js'></script>
-		<script type='text/javascript' src='js/jquery.appear.min.js'></script>
-		<script type='text/javascript' src='js/script.js'></script>
-		<script type='text/javascript' src='js/swatches-and-photos.js'></script>
-		<script type='text/javascript' src='js/jquery.cookie.min.js'></script>
-		<script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
-		<script type='text/javascript' src='js/jquery.prettyPhoto.init.min.js'></script>
-		<script type='text/javascript' src='js/jquery.selectBox.min.js'></script>
-		<script type='text/javascript' src='js/jquery.touchSwipe.min.js'></script>
-		<script type='text/javascript' src='js/jquery.transit.min.js'></script>
-		<script type='text/javascript' src='js/jquery.carouFredSel.js'></script>
-		<script type='text/javascript' src='js/jquery.magnific-popup.js'></script>
-		<script type='text/javascript' src='js/isotope.pkgd.min.js'></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-migrate.min.js"></script>
+		<script type="text/javascript" src="js/easing.min.js"></script>
+		<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/superfish-1.7.4.min.js"></script>
+		<script type="text/javascript" src="js/jquery.appear.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script type="text/javascript" src="js/swatches-and-photos.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+		<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+		<script type="text/javascript" src="js/jquery.prettyPhoto.init.min.js"></script>
+		<script type="text/javascript" src="js/jquery.selectBox.min.js"></script>
+		<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="js/jquery.transit.min.js"></script>
+		<script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+		<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	</body>
 </html>
