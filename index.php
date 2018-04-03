@@ -42,7 +42,7 @@ $statement4->closeCursor();
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>Homepage</title>
+		<title>PhoneBits</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/settings.css" type="text/css" media="all"/>
@@ -209,7 +209,7 @@ $statement4->closeCursor();
 														</ul>
 													</li>-->
 													<li class="menu-item-has-children megamenu megamenu-fullwidth dropdown">
-														<a href="shop-by-category.html" class="dropdown-hover">
+														<a href="shop-by-category.php" class="dropdown-hover">
 															<span class="underline">Shop</span> <span class="caret"></span>
 														</a>
 														<ul class="dropdown-menu">

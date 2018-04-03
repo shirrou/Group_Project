@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>PhoneBits | My Wishlist</title>
+		<title>My Account</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel='stylesheet' href='css/bootstrap.min.css' type='text/css' media='all'/>
@@ -107,7 +107,7 @@
 								<div class="right-topbar">
 									<div class="user-login">
 										<ul class="nav top-nav">
-											<li><a data-rel="loginModal" href="#"> <strong>Login</strong> </a></li>
+											<li><a data-rel="loginModal" href="#"> Login </a></li>
 										</ul>
 									</div>
 								</div>
@@ -252,89 +252,42 @@
 								</span>
 							</li>
 							<li>
-								<span>My Wishlist</span>
+								<span>My Account</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="content-container">
+			<div class="content-container no-padding">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="main-content">
-								<form class="commerce">
-									<div class="wishlist-title ">
-										<h2>My wishlist</h2>
-									</div>
-									<table class="shop_table cart wishlist_table">
-										<thead>
-											<tr>
-												<th class="product-remove"></th>
-												<th class="product-thumbnail"></th>
-												<th class="product-name"><span class="nobr">Phone Name</span></th>
-												<th class="product-price"><span class="nobr">Price </span></th>
-												<th class="product-stock-stauts"><span class="nobr">Stock Status </span></th>
-												<th class="product-add-to-cart"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="product-remove">
-													<a href="#" class="remove remove_from_wishlist">&times;</a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="shop-detail-1.html">
-														<img width="100" height="150" src="images/products/product_328x328.png" alt="Product-1"/>
-													</a>
-												</td>
-												<td class="product-name">
-													<a href="shop-detail-1.html">Samsung Galaxy S9</a>
-												</td>
-												<td class="product-price">
-													<span class="amount">
-														£699</span>
-													</span>
-												</td>
-												<td class="product-stock-status">
-													<span class="wishlist-in-stock">In Stock</span>
-												</td>
-												<td class="product-add-to-cart">
-											 		<a href="#" class="add_to_cart_button button rounded"> Add to cart</a>
-												</td>
-											</tr>
-											<tr>
-												<td class="product-remove">
-													<a href="#" class="remove remove_from_wishlist">&times;</a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="shop-detail-1.html">
-														<img width="100" height="150" src="images/products/huaweiMate10Front.png" alt="Product-2"/>
-													</a>
-												</td>
-												<td class="product-name">
-													<a href="shop-detail-1.html">Huawei Mate 10</a>
-												</td>
-												<td class="product-price">
-													<span class="amount">
-														£599</span>
-													
-												</td>
-												<td class="product-stock-status">
-													<span class="wishlist-in-stock">In Stock</span>
-												</td>
-												<td class="product-add-to-cart">
-											 		<a href="#" class="add_to_cart_button button rounded"> Add to cart</a>
-												</td>
-											</tr>
-										</tbody>
-										<tfoot>
-											<tr>
-												<td colspan="6">&nbsp;</td>
-											</tr>
-										</tfoot>
-									</table>
-								</form>
+								<div class="commerce commerce-account">
+									<h2 class="commerce-account-heading">Login</h2>
+									<form class="login">
+										<div class="form-row form-row-wide">
+											<label for="username1">
+												Username or email address <span class="required">*</span>
+											</label>
+											<input type="text" class="input-text" name="username" id="username1" value=""/>
+										</div>
+										<div class="form-row form-row-wide">
+											<label for="password1">Password <span class="required">*</span></label>
+											<input class="input-text" type="password" name="password" id="password1"/>
+										</div>
+										<div class="form-row">
+											<label for="rememberme1" class="inline form-flat-checkbox">
+												<input name="rememberme" type="checkbox" id="rememberme1" value="forever"/><i></i>Remember me 
+											</label>
+											<br><br>
+											<button class="btn btn-outline rounded" type="submit">Login</button>
+										</div>
+										<div class="lost_password">
+											<a href="#">Lost your password?</a>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
