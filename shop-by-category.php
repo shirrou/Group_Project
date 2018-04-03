@@ -2,16 +2,6 @@
 <?php
 //connetion to database
 require_once('database.php');
-//Get all item (from itemdetails because we need all the item)
-//query to get the item
-$queryItems = 'SELECT itemcategory.itemCatName, item.itemName, memory.memorySize, color.colorName, itemdetails.itemPrice
-FROM itemcategory, item, itemdetails, MEMORY, color
-WHERE itemdetails.itemCatID = itemcategory.itemCatID
-GROUP BY itemDetID';
-$statement= $db->prepare($queryItems);
-$statement->execute();
-$items = $statement->fetchAll();
-$statement->closeCursor();
 //query to get memorysize
 $queryMemory = 'SELECT memorySize FROM memory GROUP BY memorySize';
 $statement1= $db->prepare($queryMemory);
@@ -36,7 +26,19 @@ $statement4= $db->prepare($queryCountBrands);
 $statement4->execute();
 $brandsCount = $statement4->fetchAll();
 $statement4->closeCursor();
-
+//Get all item (from itemdetails because we need all the item)
+//query to get the item
+$queryItems = 'SELECT itemCategory.itemCatName, item.itemName, item.itemCatID, item.itemID, item.frontImg, item.backImg, itemdetails.itemPrice, itemdetails.memoryID, memory.memorySize, color.colorName
+FROM itemdetails
+INNER JOIN itemCategory ON itemCategory.itemCatID = itemdetails.itemCatID AND itemdetails.itemCatID = itemcategory.itemCatID 
+INNER JOIN memory ON memory.memoryID = itemdetails.memoryID
+INNER JOIN color ON color.colorID = itemdetails.colorID
+INNER JOIN item ON item.itemID = itemdetails.itemID
+GROUP BY itemDetID';
+$statement= $db->prepare($queryItems);
+$statement->execute();
+$items = $statement->fetchAll();
+$statement->closeCursor();
 ?>
 <html lang="en-US">
 	<head>
@@ -341,10 +343,11 @@ $statement4->closeCursor();
 													<div class="product-wrap">
 														<div class="product-images">
 															<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.jpg" alt=""/></a>
+																<!--to add more value use &namevalue=value(that can be the phpcode-->
+																<a href="shop-detail.php?item_id=<?php echo $itemDetails['itemID']; ?>&item_cat_id=<?php echo $itemDetails['itemCatID']; ?>"><img width="450" height="450" src="images/products/<?php echo $itemDetails['frontImg']; ?>" alt=""/></a>
 															</div>
 															<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.jpg" alt=""/></a>
+																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/<?php echo $itemDetails['backImg']; ?>" alt=""/></a>
 															</div>
 														</div>
 													</div>
@@ -366,7 +369,7 @@ $statement4->closeCursor();
 															</div>
 															<div class="info-content-wrap">
 																<h3 class="product_title">
-																	<a href="shop-detail-1.html"><?php echo $itemDetails['itemCatName']; ?> <?php echo $itemDetails['itemName']; ?></a>
+																	<a href="<?php echo $itemDetails['itemID']; ?>&item_cat_id=<?php echo $itemDetails['itemCatID']; ?>"><?php echo $itemDetails['itemCatName']; ?> <?php echo $itemDetails['itemName']; ?> - <?php echo $itemDetails['memorySize']; ?>GB - <?php echo $itemDetails['colorName']; ?></a>
 																</h3>
 																<div class="info-price">
 																	<span class="price">
@@ -389,20 +392,6 @@ $statement4->closeCursor();
 										<?php endforeach; ?>
 									</ul>
 								</div>
-								<nav class="commerce-pagination">
-									<p class="commerce-result-count">
-										Showing 1&ndash;12 of 14 results
-									</p>
-									<div class="paginate">
-										<div class="paginate_links">
-											<span class='page-numbers current'>1</span>
-											<a class='page-numbers' href='#'>2</a>
-											<a class="next page-numbers" href="#">
-												<i class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</div>
-								</nav>
 							</div>
 						</div>
 						<div class="col-md-3 sidebar-wrap">
@@ -416,6 +405,17 @@ $statement4->closeCursor();
 										<input type="search" class="search-field rounded" placeholder="Search Products&hellip;" value="" name="s"/>
 										<input type="submit" value="Search"/>
 									</form>
+								</div>
+								<div class="widget widget_layered_nav">
+									<h4 class="widget-title"><span>Brands</span></h4>
+									<ul>
+										<!--Adding selection for brand -->
+										<?php foreach ($brands as $brandName) : ?>
+										<li>
+											<a href="#"><?php echo $brandName['itemCatName']; ?></a> <small class="count">0</small>
+										</li>
+										<?php endforeach ; ?>
+									</ul>
 								</div>
 								<div class="widget widget_layered_nav">
 									<h4 class="widget-title">
@@ -448,17 +448,7 @@ $statement4->closeCursor();
 										</div>
 									</form>
 								</div>
-								<div class="widget widget_layered_nav">
-									<h4 class="widget-title"><span>Brands</span></h4>
-									<ul>
-										<!--Adding selection for brand -->
-										<?php foreach ($brands as $brandName) : ?>
-										<li>
-											<a href="#"><?php echo $brandName['itemCatName']; ?></a> <small class="count">0</small>
-										</li>
-										<?php endforeach ; ?>
-									</ul>
-								</div>
+								
 								<div class="widget widget_product_categories">
 									<h4 class="widget-title"><span>Memory</span></h4>
 									<ul class="product-categories">
@@ -466,47 +456,6 @@ $statement4->closeCursor();
 										<?php foreach ($memory as $memorySize) : ?>
 										<li><a href="#"><?php echo $memorySize['memorySize']; ?> GB</a></li>
 										<?php endforeach; ?>
-									</ul>
-								</div>
-								<div class="widget widget_products">
-									<h4 class="widget-title"><span>Best Sellers</span></h4>
-									<ul class="product_list_widget">
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-1"/> 
-												<span class="product-title">Donec tincidunt justo</span>
-											</a>
-											<del><span class="amount">20.50&#36;</span></del> 
-											<ins><span class="amount">19.00&#36;</span></ins>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-2"/> 
-												<span class="product-title">Mauris egestas</span>
-											</a>
-											<span class="amount">14.95&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-9"/> 
-												<span class="product-title">Morbi fermentum</span>
-											</a>
-											<span class="amount">17.45&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-8"/> 
-												<span class="product-title">Morbi fermentum</span>
-											</a>
-											<span class="amount">23.00&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-7"/> 
-												<span class="product-title">Ut quis Aenean</span>
-											</a>
-											<span class="amount">10.95&#36;</span>
-										</li>
 									</ul>
 								</div>
 							</div>
