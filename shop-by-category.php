@@ -33,7 +33,7 @@ FROM itemdetails
 INNER JOIN itemCategory ON itemCategory.itemCatID = itemdetails.itemCatID AND itemdetails.itemCatID = itemcategory.itemCatID 
 INNER JOIN memory ON memory.memoryID = itemdetails.memoryID
 INNER JOIN color ON color.colorID = itemdetails.colorID
-INNER JOIN item ON item.itemID = itemdetails.itemID
+INNER JOIN item ON item.itemID = itemdetails.itemID and itemdetails.itemCatID = item.itemCatID
 GROUP BY itemDetID';
 $statement= $db->prepare($queryItems);
 $statement->execute();
