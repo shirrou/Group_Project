@@ -42,7 +42,7 @@ $statement4->closeCursor();
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>PhoneBits</title>
+		<title>Homepage | PhoneBits</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/settings.css" type="text/css" media="all"/>
@@ -63,83 +63,27 @@ $statement4->closeCursor();
 		<div class="offcanvas open">
 			<div class="offcanvas-wrap">
 				<div class="offcanvas-user clearfix">
-					<a class="offcanvas-user-wishlist-link" href="wishlist.html">
+					<a class="offcanvas-user-wishlist-link" href="wishlist.php">
 						<i class="fa fa-heart-o"></i> My Wishlist
 					</a>
-					<a class="offcanvas-user-account-link" href="my-account.html">
+					<a class="offcanvas-user-account-link" href="my-account.php">
 						<i class="fa fa-user"></i> Login
 					</a>
 				</div>
 				<nav class="offcanvas-navbar">
 					<ul class="offcanvas-nav">
-						<li><a href="#">Home</a></li>
-						<!--
-						<li class="menu-item-has-children dropdown current-menu-ancestor">
-							<a href="index.html">Home <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="home-v2.html">Home v2</a></li>
-								<li><a href="home-v3.html">Home v3</a></li>
-								<li><a href="home-v4.html">Home v4</a></li>
-								<li><a href="home-v5.html">Home v5</a></li>
-							</ul>
-						</li>
-						-->
-						<li class="menu-item-has-children dropdown">
-							<a href="shop-by-category.html" class="dropdown-hover">Shop <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Category <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Brands/Flagships? <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Features <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-									</ul>
-								</li>
-								<li>
-									<a title="Mega Menu" href="#">Mega Menu</a>
-								</li>
-							</ul>
-						</li>
-						<!--<li><a href="collection.html">Collections</a></li>
-						<li class="menu-item-has-children dropdown">
-							<a href="#" class="dropdown-hover">Blog <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="blog-default.html">Blog Default</a></li>
-								<li><a href="blog-center.html">Blog Center</a></li>
-								<li><a href="blog-masonry.html">Blog Masonry</a></li>
-							</ul>
-						</li>-->
-						<li class="menu-item-has-children dropdown">
-							<a href="#" class="dropdown-hover">Pages <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="about-us.html">About us</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-								<li><a href="faq.html">FAQ</a></li>
-								<li><a href="404.html">404</a></li>
-							</ul>
-						</li>
+						<ul class="nav navbar-nav primary-nav">
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
+													
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
+													
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+						</ul>
 					</ul>
+					
+						
 				</nav>
 			</div>
 		</div>
@@ -195,111 +139,16 @@ $statement4->closeCursor();
 											</div>
 											<nav class="collapse navbar-collapse primary-navbar-collapse">
 												<ul class="nav navbar-nav primary-nav">
-													<li><a href="index.html"><span class="underline">Home</span></a></li>
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
 													
-													<!--<li class="current-menu-item menu-item-has-children dropdown">
-														<a href="./" class="dropdown-hover">
-															<span class="underline">Home</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="home-v2.html">Home v2</a></li>
-															<li><a href="home-v3.html">Home v3</a></li>
-															<li><a href="home-v4.html">Home v4</a></li>
-															<li><a href="home-v5.html">Home v5</a></li>
-														</ul>
-													</li>-->
-													<li class="menu-item-has-children megamenu megamenu-fullwidth dropdown">
-														<a href="shop-by-category.php" class="dropdown-hover">
-															<span class="underline">Shop</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Category <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Brands/Flagships? <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Features <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-																</ul>
-															</li>
-															<!--<li class="mega-col-3">
-																<h3 class="megamenu-title">Mega Menu</h3>
-																<div class="megamenu-sidebar">
-																	<div class="widget widget_products commerce">
-																		<ul class="product_list_widget">
-																			<li>
-																				<a href="shop-detail-1.html">
-																					<img src="images/products/thumb/product_60x60.jpg" alt="2a"/> 
-																					<span class="product-title">Cras rhoncus duis viverra</span>
-																				</a>
-																				<span class="amount">&pound;12.00</span>
-																				&ndash;
-																				<span class="amount">&pound;20.00</span>
-																			</li>
-																			<li>
-																				<a href="shop-detail-1.html">
-																					<img src="images/products/thumb/product_60x60.jpg" alt="3a"/> 
-																					<span class="product-title">Morbi sed egestas</span>
-																				</a>
-																				<span class="amount">&pound;123.00</span>
-																			</li>
-																			<li>
-																				<a href="shop-detail-1.html">
-																					<img src="images/products/thumb/product_60x60.jpg" alt="4a"/> 
-																					<span class="product-title">Creamy Spring Pasta</span>
-																				</a>
-																				<span class="amount">&pound;321.00</span>
-																			</li>
-																		</ul>
-																	</div>
-																</div>
-															</li>-->
-														</ul>
-													</li>
-													<!--<li><a href="collection.html"><span class="underline">Collections</span></a></li>
-													<li class="menu-item-has-children dropdown">
-														<a href="#" class="dropdown-hover">
-															<span class="underline">Blog</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="blog-default.html">Blog Default</a></li>
-															<li><a href="blog-center.html">Blog Center</a></li>
-															<li><a href="blog-masonry.html">Blog Masonry</a></li>
-														</ul>
-													</li>-->
-													<li class="menu-item-has-children dropdown">
-														<a href="#" class="dropdown-hover">
-															<span class="underline">Pages</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="about-us.html">About us</a></li>
-															<li><a href="contact-us.html">Contact Us</a></li>
-															<li><a href="faq.html">FAQ</a></li>
-															<li><a href="404.html">404</a></li>
-														</ul>
-													</li>
-												</ul>
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
+													
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+												</ul>	
 											</nav>
+													
 											<div class="header-right">
 												<div class="navbar-search">
 													<a class="navbar-search-button" href="#">
@@ -318,7 +167,7 @@ $statement4->closeCursor();
 													</div>
 												</div>
 												<div class="navbar-wishlist">
-													<a class="wishlist" href="wishlist.html">
+													<a class="wishlist" href="wishlist.php">
 														<i class="fa fa-heart-o"></i>
 													</a>
 												</div>
@@ -416,62 +265,7 @@ $statement4->closeCursor();
 								</div>
 							</div>
 						</div>
-						<!--<div class="container">
-							<div class="row row-fluid pt-6 pb-6">
-								<div class="text-center col-sm-3">
-									<div class="box-ft box-ft-5 black">
-										<img src="images/thumb_270x470.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">iPad Pro</span>
-													<span class="bof-tf-sub-title">Thin.Light.Epic</span>
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="box-ft box-ft-5">
-										<img src="images/thumb_570x470.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">Accessories</span>
-													<span class="bof-tf-sub-title">
-														Personalize your iPad with casesand covers. 
-													</span>
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="box-ft box-ft-5 mb-3">
-										<img src="images/thumb_270x220.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">Mixr</span>
-													<span class="bof-tf-sub-title">Sync your sound. And your style. </span>
-												</span>
-											</span>
-										</a>
-									</div>
-									<div class="box-ft box-ft-5">
-										<img src="images/thumb_270x220.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">Mac Pro</span>
-													<span class="bof-tf-sub-title">Starting at £2,999</span>
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>-->
+						
 						<div class="container">
 							<div class="row shipping-policy">
 								<div class="policy-featured-col col-md-4 col-sm-6">
@@ -583,7 +377,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 										<div class="special-product">
 											<div class="special-product-wrap">
 												<div class="special-product-image">
-													<a href="shop-detail.php?item_id=4&item_cat_id=5">
+													<a href="#">
 														<img width="470" height="470" src="images/nokia8s.png" alt="special_product"/>
 													</a>
 												</div>
@@ -671,169 +465,6 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								</div>
 							</div>
 						</div>
-						<!--<div class="container">
-							<div class="row row-fluid mb-6">
-								<div class="col-sm-6">
-									<div class="box-ft box-ft-5 black">
-										<img src="images/thumb_570x190.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">MEGA SALE</span>
-													<span class="bof-tf-sub-title">Smart TV </span>
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="box-ft box-ft-5 black">
-										<img src="images/thumb_570x190.jpg" alt="">
-										<a href="#">
-											<span class="bof-tf-title-wrap">
-												<span class="bof-tf-title-wrap-2">
-													<span class="bof-tf-title">MOBILE MUSIC</span>
-													<span class="bof-tf-sub-title">Feel the real </span>
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>-->
-						
-						<!--
-						<div class="container">
-							<div class="row row-fluid mb-5">
-								<div class="col-sm-12">
-									<h3 class="heading-center-custom text-center">
-										our of blog
-									</h3>
-									<div class="post-grid-wrap">
-										<ul class="row grid col-3">
-											<li class="col-sm-4 ">
-												<article class="hentry">
-													<div class="hentry-wrap">
-														<div class="entry-featured">
-															<a href="blog-detail.html" title="Blog-1">
-																<img width="600" height="450" src="images/blog/blog_370x238.jpg" alt="Blog-1"/>
-															</a>
-														</div>
-														<div class="entry-info">
-															<div class="entry-header">
-																<h3 class="entry-title">
-																	<a href="blog-detail.html">Monogrammed Speedy in Tow </a>
-																</h3>
-															</div>
-															<div class="entry-content">
-																<p>
-																	The summer holidays are wonderful. Dressing for them can be significantly less so: Packing light is always at a premium, but one never wants to feel high, dry, and seriously...
-																</p>
-															</div>
-															<div class="entry-meta">
-																<span class="meta-date">
-																	Date: 
-																	<time datetime="2015-08-11T06:27:49+00:00">
-																		August 11, 2015
-																	</time>
-																</span>
-																<span class="meta-author">
-																	By: 
-																	<a href="#">sitesao</a>
-																</span>
-																<span class="meta-category">
-																	Category: 
-																	<a href="#">Aliquam</a>, <a href="#">Nunc</a>
-																</span>
-															</div>
-														</div>
-													</div>
-												</article>
-											</li>
-											<li class="col-sm-4 ">
-												<article class="hentry">
-													<div class="hentry-wrap">
-														<div class="entry-featured">
-															<a href="blog-detail.html" title="Blog-1">
-																<img width="600" height="450" src="images/blog/blog_370x238.jpg" alt="Blog-2"/>
-															</a>
-														</div>
-														<div class="entry-info">
-															<div class="entry-header">
-																<h3 class="entry-title">
-																	<a href="blog-detail.html">Summer Classics in Positano </a>
-																</h3>
-															</div>
-															<div class="entry-content">
-																<p>
-																	The summer holidays are wonderful. Dressing for them can be significantly less so: Packing light is always at a premium, but one never wants to feel high, dry, and seriously...
-																</p>
-															</div>
-															<div class="entry-meta">
-																<span class="meta-date">
-																	Date: 
-																	<time datetime="2015-08-11T06:27:49+00:00">
-																		August 11, 2015
-																	</time>
-																</span>
-																<span class="meta-author">
-																	By: 
-																	<a href="#">sitesao</a>
-																</span>
-																<span class="meta-category">
-																	Category: 
-																	<a href="#">Nunc</a>
-																</span>
-															</div>
-														</div>
-													</div>
-												</article>
-											</li>
-											<li class="col-sm-4 ">
-												<article class="hentry">
-													<div class="hentry-wrap">
-														<div class="entry-featured">
-															<a href="blog-detail.html" title="Blog-1">
-																<img width="600" height="450" src="images/blog/blog_370x238.jpg" alt="Blog-3"/>
-															</a>
-														</div>
-														<div class="entry-info">
-															<div class="entry-header">
-																<h3 class="entry-title">
-																	<a href="blog-detail.html">That Most Modern </a>
-																</h3>
-															</div>
-															<div class="entry-content">
-																<p>
-																	The summer holidays are wonderful. Dressing for them can be significantly less so: Packing light is always at a premium, but one never wants to feel high, dry, and seriously...
-																</p>
-															</div>
-															<div class="entry-meta">
-																<span class="meta-date">
-																	Date: 
-																	<time datetime="2015-08-11T06:27:49+00:00">
-																		August 11, 2015
-																	</time>
-																</span>
-																<span class="meta-author">
-																	By: 
-																	<a href="#">sitesao</a>
-																</span>
-																<span class="meta-category">
-																	Category: 
-																	<a href="#">Nunc</a>, <a href="#">Aliquam</a>
-																</span>
-															</div>
-														</div>
-													</div>
-												</article>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>-->
-						
 						
 						<div class="container">
 							<div class="row row-fluid brands mb-3">
@@ -935,133 +566,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								</div>
 							</div>
 						</div>
-						<!--
-						<div class="container">
-							<div class="row row-fluid">
-								<div class="col-sm-6 col-lg-3 col-md-3">
-									<h4 class="custom_heading">FEATURED</h4>
-									<div class="widget commerce">
-										<ul class="product_list_widget">
-											<li>
-												<a href="#" title="Urbeats">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Urbeats</span>
-												</a>
-												<del><span class="amount">&pound;20.50</span></del> 
-												<ins><span class="amount">&pound;19.00</span></ins>
-											</li>
-											<li>
-												<a href="#" title="Epson Color Printer">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Epson Color Printer</span>
-												</a>
-												<span class="amount">&pound;17.50</span>
-											</li>
-											<li>
-												<a href="#" title="Screen Holder">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Screen Holder</span>
-												</a>
-												<del><span class="amount">&pound;23.00</span></del> 
-												<ins><span class="amount">&pound;20.00</span></ins>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-sm-6 col-lg-3 col-md-3">
-									<h4 class="custom_heading">TOP RATE</h4>
-									<div class="widget commerce">
-										<ul class="product_list_widget">
-											<li>
-												<a href="#" title="Epson Color Printer">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> 
-													<span class="product-title">Epson Color Printer</span>
-												</a>
-												<div class="star-rating">
-													<span style="width:100%"></span>
-												</div> 
-												<span class="amount">&pound;17.50</span>
-											</li>
-											<li>
-												<a href="#" title="Urbeats">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> 
-													<span class="product-title">Urbeats</span>
-												</a>
-												<div class="star-rating">
-													<span style="width:80%"></span>
-												</div> 
-												<span class="amount">&pound;12.00</span>
-												&ndash;
-												<span class="amount">&pound;20.00</span>
-											</li>
-											<li>
-												<a href="#" title="Macbook Pro">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> 
-													<span class="product-title">Macbook Pro</span>
-												</a>
-												<div class="star-rating">
-													<span style="width:100%"></span>
-												</div> 
-												<del><span class="amount">&pound;20.50</span></del> 
-												<ins><span class="amount">&pound;19.00</span></ins>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-sm-6 col-lg-3 col-md-3">
-									<h4 class="custom_heading">HOT SALE</h4>
-									<div class="widget commerce">
-										<ul class="product_list_widget">
-											<li>
-												<a href="#" title="Urbeats">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Urbeats</span>
-												</a>
-												<del><span class="amount">&pound;20.50</span></del> 
-												<ins><span class="amount">&pound;19.00</span></ins>
-											</li>
-											<li>
-												<a href="#" title="Epson Color Printer">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Epson Color Printer</span>
-												</a>
-												<span class="amount">&pound;17.50</span>
-											</li>
-											<li>
-												<a href="#" title="Screen Holder">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Screen Holder</span>
-												</a>
-												<del><span class="amount">&pound;23.00</span></del> 
-												<ins><span class="amount">&pound;20.00</span></ins>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-sm-6 col-lg-3 col-md-3">
-									<h4 class="custom_heading">BEST SELLING</h4>
-									<div class="widget commerce">
-										<ul class="product_list_widget">
-											<li>
-												<a href="#" title="Urbeats">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Urbeats</span>
-												</a>
-												<del><span class="amount">&pound;20.50</span></del> 
-												<ins><span class="amount">&pound;19.00</span></ins>
-											</li>
-											<li>
-												<a href="#" title="Epson Color Printer">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Epson Color Printer</span>
-												</a>
-												<span class="amount">&pound;17.50</span>
-											</li>
-											<li>
-												<a href="#" title="Screen Holder">
-													<img width="100" height="100" src="images/products/product_60x60.jpg" alt=""/> <span class="product-title">Screen Holder</span>
-												</a>
-												<del><span class="amount">&pound;23.00</span></del> 
-												<ins><span class="amount">&pound;20.00</span></ins>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						-->
+						
 					</div>
 				</div>
 			</div>
@@ -1118,7 +623,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 												<li>
 													<i class="fa fa-home"></i>
 													<h4>Address:</h4>
-													<p>123 Street, London</p>
+													<p>St Mary's Rd, W5 5RF, London</p>
 												</li>
 												<li>
 													<i class="fa fa-mobile"></i>
@@ -1128,7 +633,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 												<li>
 													<i class="fa fa-envelope"></i>
 													<h4>Email:</h4>
-													<p><a href="mailto:email@domain.com">email@domain.com</a></p>
+													<p><a href="mailto:email@domain.com">phonebits@uwl.co.uk</a></p>
 												</li>
 											</ul>
 										</div>
@@ -1137,13 +642,12 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_nav_menu">
 										<h3 class="widget-title">
-											<span>infomation</span>
+											<span>information</span>
 										</h3>
 										<div class="menu-infomation-container">
 											<ul class="menu">
-												<li><a href="#">About Us</a></li>
 												<li><a href="#">Contact Us</a></li>
-												<li><a href="#">Term &#038; Conditions</a></li>
+												
 												
 												
 											</ul>
@@ -1157,11 +661,8 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 										</h3>
 										<div class="menu-customer-care-container">
 											<ul class="menu">
-												<li><a href="#">Support</a></li>
 												<li><a href="#">Sitemap</a></li>
-												<li><a href="#">FAQ</a></li>
-												<li><a href="#">Shipping</a></li>
-												<li><a href="#">Returns</a></li>
+												
 											</ul>
 										</div>
 									</div>
@@ -1170,14 +671,12 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 									<div class="widget widget_text">
 										
 											<h3 class="widget-title">
-												<span>payment Menthod</span>
+												<span>payment Method</span>
 											</h3>
 											<div class="payment">
 												<a href="#"><i class="fa fa-cc-mastercard"></i></a>
 												<a href="#"><i class="fa fa-cc-visa"></i></a>
 												<a href="#"><i class="fa fa-cc-paypal"></i></a>
-												<a href="#"><i class="fa fa-cc-discover"></i></a>
-												<a href="#"><i class="fa fa-credit-card"></i></a>
 												<a href="#"><i class="fa fa-cc-amex"></i></a>
 											</div>
 										
@@ -1188,7 +687,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 					</div>
 				</div>
 				<div class="footer-copyright text-center">
-					© 2018 Group Project 
+					© 2018 PHONEBITS - Group Project 
 				</div>
 			</footer>
 		</div>

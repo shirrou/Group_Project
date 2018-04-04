@@ -42,7 +42,7 @@ $statement4->closeCursor();
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>Homepage</title>
+		<title>Homepage | PhoneBits</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/settings.css" type="text/css" media="all"/>
@@ -63,65 +63,27 @@ $statement4->closeCursor();
 		<div class="offcanvas open">
 			<div class="offcanvas-wrap">
 				<div class="offcanvas-user clearfix">
-					<a class="offcanvas-user-wishlist-link" href="wishlist.html">
+					<a class="offcanvas-user-wishlist-link" href="wishlist.php">
 						<i class="fa fa-heart-o"></i> My Wishlist
 					</a>
-					<a class="offcanvas-user-account-link" href="my-account.html">
+					<a class="offcanvas-user-account-link" href="my-account.php">
 						<i class="fa fa-user"></i> Login
 					</a>
 				</div>
 				<nav class="offcanvas-navbar">
 					<ul class="offcanvas-nav">
-						<li><a href="#">Home</a></li>
-						
-						<li class="menu-item-has-children dropdown">
-							<a href="shop-by-category.html" class="dropdown-hover">Shop <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Category <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Brands/Flagships? <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Features <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-									</ul>
-								</li>
-								<li>
-									<a title="Mega Menu" href="#">Mega Menu</a>
-								</li>
-							</ul>
-						</li>
-					
-						<li class="menu-item-has-children dropdown">
-							<a href="#" class="dropdown-hover">Pages <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="about-us.html">About us</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-								<li><a href="faq.html">FAQ</a></li>
-								<li><a href="404.html">404</a></li>
-							</ul>
-						</li>
+						<ul class="nav navbar-nav primary-nav">
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
+													
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
+													
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+						</ul>
 					</ul>
+					
+						
 				</nav>
 			</div>
 		</div>
@@ -171,59 +133,16 @@ $statement4->closeCursor();
 											</div>
 											<nav class="collapse navbar-collapse primary-navbar-collapse">
 												<ul class="nav navbar-nav primary-nav">
-													<li><a href="index.html"><span class="underline">Home</span></a></li>
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
 													
-													<li class="menu-item-has-children megamenu megamenu-fullwidth dropdown">
-														<a href="shop-by-category.html" class="dropdown-hover">
-															<span class="underline">Shop</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Category <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Brands/Flagships? <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Features <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shoshop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-																</ul>
-															</li>
-															
-														</ul>
-													</li>
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
 													
-													<li class="menu-item-has-children dropdown">
-														<a href="#" class="dropdown-hover">
-															<span class="underline">Pages</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="about-us.html">About us</a></li>
-															<li><a href="contact-us.html">Contact Us</a></li>
-															<li><a href="faq.html">FAQ</a></li>
-															<li><a href="404.html">404</a></li>
-														</ul>
-													</li>
-												</ul>
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+												</ul>	
 											</nav>
+													
 											<div class="header-right">
 												<div class="navbar-search">
 													<a class="navbar-search-button" href="#">
@@ -242,7 +161,7 @@ $statement4->closeCursor();
 													</div>
 												</div>
 												<div class="navbar-wishlist">
-													<a class="wishlist" href="wishlist.html">
+													<a class="wishlist" href="wishlist.php">
 														<i class="fa fa-heart-o"></i>
 													</a>
 												</div>
@@ -698,7 +617,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 												<li>
 													<i class="fa fa-home"></i>
 													<h4>Address:</h4>
-													<p>123 Street, London</p>
+													<p>St Mary's Rd, W5 5RF, London</p>
 												</li>
 												<li>
 													<i class="fa fa-mobile"></i>
@@ -708,7 +627,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 												<li>
 													<i class="fa fa-envelope"></i>
 													<h4>Email:</h4>
-													<p><a href="mailto:email@domain.com">email@domain.com</a></p>
+													<p><a href="mailto:email@domain.com">phonebits@uwl.co.uk</a></p>
 												</li>
 											</ul>
 										</div>
@@ -717,13 +636,12 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_nav_menu">
 										<h3 class="widget-title">
-											<span>infomation</span>
+											<span>information</span>
 										</h3>
 										<div class="menu-infomation-container">
 											<ul class="menu">
-												<li><a href="#">About Us</a></li>
 												<li><a href="#">Contact Us</a></li>
-												<li><a href="#">Term &#038; Conditions</a></li>
+												
 												
 												
 											</ul>
@@ -737,11 +655,8 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 										</h3>
 										<div class="menu-customer-care-container">
 											<ul class="menu">
-												<li><a href="#">Support</a></li>
 												<li><a href="#">Sitemap</a></li>
-												<li><a href="#">FAQ</a></li>
-												<li><a href="#">Shipping</a></li>
-												<li><a href="#">Returns</a></li>
+												
 											</ul>
 										</div>
 									</div>
@@ -750,14 +665,12 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 									<div class="widget widget_text">
 										
 											<h3 class="widget-title">
-												<span>payment Menthod</span>
+												<span>payment Method</span>
 											</h3>
 											<div class="payment">
 												<a href="#"><i class="fa fa-cc-mastercard"></i></a>
 												<a href="#"><i class="fa fa-cc-visa"></i></a>
 												<a href="#"><i class="fa fa-cc-paypal"></i></a>
-												<a href="#"><i class="fa fa-cc-discover"></i></a>
-												<a href="#"><i class="fa fa-credit-card"></i></a>
 												<a href="#"><i class="fa fa-cc-amex"></i></a>
 											</div>
 										
@@ -768,7 +681,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 					</div>
 				</div>
 				<div class="footer-copyright text-center">
-					© 2018 Group Project 
+					© 2018 PHONEBITS - Group Project 
 				</div>
 			</footer>
 		</div>

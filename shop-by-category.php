@@ -2,16 +2,6 @@
 <?php
 //connetion to database
 require_once('database.php');
-//Get all item (from itemdetails because we need all the item)
-//query to get the item
-$queryItems = 'SELECT itemcategory.itemCatName, item.itemName, memory.memorySize, color.colorName, itemdetails.itemPrice
-FROM itemcategory, item, itemdetails, MEMORY, color
-WHERE itemdetails.itemCatID = itemcategory.itemCatID
-GROUP BY itemDetID';
-$statement= $db->prepare($queryItems);
-$statement->execute();
-$items = $statement->fetchAll();
-$statement->closeCursor();
 //query to get memorysize
 $queryMemory = 'SELECT memorySize FROM memory GROUP BY memorySize';
 $statement1= $db->prepare($queryMemory);
@@ -36,13 +26,25 @@ $statement4= $db->prepare($queryCountBrands);
 $statement4->execute();
 $brandsCount = $statement4->fetchAll();
 $statement4->closeCursor();
-
+//Get all item (from itemdetails because we need all the item)
+//query to get the item
+$queryItems = 'SELECT itemCategory.itemCatName, item.itemName, item.itemCatID, item.itemID, item.frontImg, item.backImg, itemdetails.itemPrice, itemdetails.memoryID, memory.memorySize, color.colorName
+FROM itemdetails
+INNER JOIN itemCategory ON itemCategory.itemCatID = itemdetails.itemCatID AND itemdetails.itemCatID = itemcategory.itemCatID 
+INNER JOIN memory ON memory.memoryID = itemdetails.memoryID
+INNER JOIN color ON color.colorID = itemdetails.colorID
+INNER JOIN item ON item.itemID = itemdetails.itemID
+GROUP BY itemDetID';
+$statement= $db->prepare($queryItems);
+$statement->execute();
+$items = $statement->fetchAll();
+$statement->closeCursor();
 ?>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>Shop</title>
+		<title>Shop | PhoneBits</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
@@ -57,67 +59,33 @@ $statement4->closeCursor();
 		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all"/>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+		
 	</head>
 	<body>
 		<div class="offcanvas open">
 			<div class="offcanvas-wrap">
 				<div class="offcanvas-user clearfix">
-					<a class="offcanvas-user-wishlist-link" href="wishlist.html">
+					<a class="offcanvas-user-wishlist-link" href="wishlist.php">
 						<i class="fa fa-heart-o"></i> My Wishlist
 					</a>
-					<a class="offcanvas-user-account-link" href="my-account.html">
+					<a class="offcanvas-user-account-link" href="my-account.php">
 						<i class="fa fa-user"></i> Login
 					</a>
 				</div>
 				<nav class="offcanvas-navbar">
 					<ul class="offcanvas-nav">
-						<li><a href="#">Home</a></li>
-						
-						<li class="menu-item-has-children dropdown">
-							<a href="shop-by-category.html" class="dropdown-hover">Shop <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Brands/Flagships? <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Features <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-									</ul>
-								</li>
-								<li>
-									<a title="Mega Menu" href="#">Mega Menu</a>
-								</li>
-							</ul>
-						</li>
-						
-						<li class="menu-item-has-children dropdown">
-							<a href="#" class="dropdown-hover">Pages <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="about-us.html">About us</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-								<li><a href="faq.html">FAQ</a></li>
-								<li><a href="404.html">404</a></li>
-							</ul>
-						</li>
+						<ul class="nav navbar-nav primary-nav">
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
+													
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
+													
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+						</ul>
 					</ul>
+					
+						
 				</nav>
 			</div>
 		</div>
@@ -137,7 +105,7 @@ $statement4->closeCursor();
 								<div class="right-topbar">
 									<div class="user-login">
 										<ul class="nav top-nav">
-											<li><a data-rel="loginModal" href="#"> Login </a></li>
+											<li><a data-rel="loginModal" href="#"> <strong>Login</strong> </a></li>
 										</ul>
 									</div>
 								</div>
@@ -173,59 +141,16 @@ $statement4->closeCursor();
 											</div>
 											<nav class="collapse navbar-collapse primary-navbar-collapse">
 												<ul class="nav navbar-nav primary-nav">
-													<li><a href="index.html"><span class="underline">Home</span></a></li>
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
 													
-													<li class="menu-item-has-children megamenu megamenu-fullwidth dropdown">
-														<a href="shop-by-category.html" class="dropdown-hover">
-															<span class="underline">Shop</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Category <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Brands/Flagships? <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Features <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-																</ul>
-															</li>
-															
-														</ul>
-													</li>
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
 													
-													<li class="menu-item-has-children dropdown">
-														<a href="#" class="dropdown-hover">
-															<span class="underline">Pages</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="about-us.html">About us</a></li>
-															<li><a href="contact-us.html">Contact Us</a></li>
-															<li><a href="faq.html">FAQ</a></li>
-															<li><a href="404.html">404</a></li>
-														</ul>
-													</li>
-												</ul>
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+												</ul>	
 											</nav>
+													
 											<div class="header-right">
 												<div class="navbar-search">
 													<a class="navbar-search-button" href="#">
@@ -244,7 +169,7 @@ $statement4->closeCursor();
 													</div>
 												</div>
 												<div class="navbar-wishlist">
-													<a class="wishlist" href="wishlist.html">
+													<a class="wishlist" href="wishlist.php">
 														<i class="fa fa-heart-o"></i>
 													</a>
 												</div>
@@ -341,10 +266,11 @@ $statement4->closeCursor();
 													<div class="product-wrap">
 														<div class="product-images">
 															<div class="shop-loop-thumbnail shop-loop-front-thumbnail">
-																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328.jpg" alt=""/></a>
+																<!--to add more value use &namevalue=value(that can be the phpcode-->
+																<a href="shop-detail.php?item_id=<?php echo $itemDetails['itemID']; ?>&item_cat_id=<?php echo $itemDetails['itemCatID']; ?>"><img width="450" height="450" src="images/products/<?php echo $itemDetails['frontImg']; ?>" alt=""/></a>
 															</div>
 															<div class="shop-loop-thumbnail shop-loop-back-thumbnail">
-																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/product_328x328alt.jpg" alt=""/></a>
+																<a href="shop-detail-1.html"><img width="450" height="450" src="images/products/<?php echo $itemDetails['backImg']; ?>" alt=""/></a>
 															</div>
 														</div>
 													</div>
@@ -366,7 +292,7 @@ $statement4->closeCursor();
 															</div>
 															<div class="info-content-wrap">
 																<h3 class="product_title">
-																	<a href="shop-detail-1.html"><?php echo $itemDetails['itemCatName']; ?> <?php echo $itemDetails['itemName']; ?></a>
+																	<a href="<?php echo $itemDetails['itemID']; ?>&item_cat_id=<?php echo $itemDetails['itemCatID']; ?>"><?php echo $itemDetails['itemCatName']; ?> <?php echo $itemDetails['itemName']; ?> - <?php echo $itemDetails['memorySize']; ?>GB - <?php echo $itemDetails['colorName']; ?></a>
 																</h3>
 																<div class="info-price">
 																	<span class="price">
@@ -389,20 +315,6 @@ $statement4->closeCursor();
 										<?php endforeach; ?>
 									</ul>
 								</div>
-								<nav class="commerce-pagination">
-									<p class="commerce-result-count">
-										Showing 1&ndash;12 of 14 results
-									</p>
-									<div class="paginate">
-										<div class="paginate_links">
-											<span class='page-numbers current'>1</span>
-											<a class='page-numbers' href='#'>2</a>
-											<a class="next page-numbers" href="#">
-												<i class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</div>
-								</nav>
 							</div>
 						</div>
 						<div class="col-md-3 sidebar-wrap">
@@ -416,6 +328,17 @@ $statement4->closeCursor();
 										<input type="search" class="search-field rounded" placeholder="Search Products&hellip;" value="" name="s"/>
 										<input type="submit" value="Search"/>
 									</form>
+								</div>
+								<div class="widget widget_layered_nav">
+									<h4 class="widget-title"><span>Brands</span></h4>
+									<ul>
+										<!--Adding selection for brand -->
+										<?php foreach ($brands as $brandName) : ?>
+										<li>
+											<a href="#"><?php echo $brandName['itemCatName']; ?></a> <small class="count">0</small>
+										</li>
+										<?php endforeach ; ?>
+									</ul>
 								</div>
 								<div class="widget widget_layered_nav">
 									<h4 class="widget-title">
@@ -448,17 +371,7 @@ $statement4->closeCursor();
 										</div>
 									</form>
 								</div>
-								<div class="widget widget_layered_nav">
-									<h4 class="widget-title"><span>Brands</span></h4>
-									<ul>
-										<!--Adding selection for brand -->
-										<?php foreach ($brands as $brandName) : ?>
-										<li>
-											<a href="#"><?php echo $brandName['itemCatName']; ?></a> <small class="count">0</small>
-										</li>
-										<?php endforeach ; ?>
-									</ul>
-								</div>
+								
 								<div class="widget widget_product_categories">
 									<h4 class="widget-title"><span>Memory</span></h4>
 									<ul class="product-categories">
@@ -466,47 +379,6 @@ $statement4->closeCursor();
 										<?php foreach ($memory as $memorySize) : ?>
 										<li><a href="#"><?php echo $memorySize['memorySize']; ?> GB</a></li>
 										<?php endforeach; ?>
-									</ul>
-								</div>
-								<div class="widget widget_products">
-									<h4 class="widget-title"><span>Best Sellers</span></h4>
-									<ul class="product_list_widget">
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-1"/> 
-												<span class="product-title">Donec tincidunt justo</span>
-											</a>
-											<del><span class="amount">20.50&#36;</span></del> 
-											<ins><span class="amount">19.00&#36;</span></ins>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-2"/> 
-												<span class="product-title">Mauris egestas</span>
-											</a>
-											<span class="amount">14.95&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-9"/> 
-												<span class="product-title">Morbi fermentum</span>
-											</a>
-											<span class="amount">17.45&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-8"/> 
-												<span class="product-title">Morbi fermentum</span>
-											</a>
-											<span class="amount">23.00&#36;</span>
-										</li>
-										<li>
-											<a href="shop-detail-1.html">
-												<img width="200" height="200" src="images/products/product_60x60.jpg" alt="Product-7"/> 
-												<span class="product-title">Ut quis Aenean</span>
-											</a>
-											<span class="amount">10.95&#36;</span>
-										</li>
 									</ul>
 								</div>
 							</div>
@@ -537,21 +409,21 @@ $statement4->closeCursor();
 								<h4 class="footer-featured-title">
 									100% <br> return money
 								</h4>
-								free return standard order in 30 days 
+								Free return standard order in 30 days 
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-globe"></i>
 								<h4 class="footer-featured-title">
 									world wide <br> delivery
 								</h4>
-								free ship for payment over $100
+								Free ship for payment over £100
 							</div>
 							<div class="footer-featured-col col-md-4 col-sm-6">
 								<i class="fa fa-clock-o"></i>
 								<h4 class="footer-featured-title">
 									24h <br> shipment 
 								</h4>
-								for standard package 
+								For standard package 
 							</div>
 						</div>
 					</div>
@@ -567,7 +439,7 @@ $statement4->closeCursor();
 												<li>
 													<i class="fa fa-home"></i>
 													<h4>Address:</h4>
-													<p>123 Street, London</p>
+													<p>St Mary's Rd, W5 5RF, London</p>
 												</li>
 												<li>
 													<i class="fa fa-mobile"></i>
@@ -577,7 +449,7 @@ $statement4->closeCursor();
 												<li>
 													<i class="fa fa-envelope"></i>
 													<h4>Email:</h4>
-													<p><a href="mailto:email@domain.com">email@domain.com</a></p>
+													<p><a href="mailto:email@domain.com">phonebits@uwl.co.uk</a></p>
 												</li>
 											</ul>
 										</div>
@@ -586,13 +458,12 @@ $statement4->closeCursor();
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_nav_menu">
 										<h3 class="widget-title">
-											<span>infomation</span>
+											<span>information</span>
 										</h3>
 										<div class="menu-infomation-container">
 											<ul class="menu">
-												<li><a href="#">About Us</a></li>
 												<li><a href="#">Contact Us</a></li>
-												<li><a href="#">Term &#038; Conditions</a></li>
+												
 												
 												
 											</ul>
@@ -606,35 +477,22 @@ $statement4->closeCursor();
 										</h3>
 										<div class="menu-customer-care-container">
 											<ul class="menu">
-												<li><a href="#">Support</a></li>
 												<li><a href="#">Sitemap</a></li>
-												<li><a href="#">FAQ</a></li>
-												<li><a href="#">Shipping</a></li>
-												<li><a href="#">Returns</a></li>
+												
 											</ul>
 										</div>
 									</div>
 								</div>
 								<div class="footer-widget-col col-md-3 col-sm-6">
 									<div class="widget widget_text">
-										<!--<h3 class="widget-title">
-											<span>open house</span>
-										</h3>
-										<div class="textwidget">
-											<ul class="open-time">
-												<li><span>Mon - Fri:</span><span>8am - 5pm</span> </li>
-												<li><span>Sat:</span><span>8am - 11am</span> </li>
-												<li><span>Sun: </span><span>Closed</span></li>
-											</ul>-->
+										
 											<h3 class="widget-title">
-												<span>payment Menthod</span>
+												<span>payment Method</span>
 											</h3>
 											<div class="payment">
 												<a href="#"><i class="fa fa-cc-mastercard"></i></a>
 												<a href="#"><i class="fa fa-cc-visa"></i></a>
 												<a href="#"><i class="fa fa-cc-paypal"></i></a>
-												<a href="#"><i class="fa fa-cc-discover"></i></a>
-												<a href="#"><i class="fa fa-credit-card"></i></a>
 												<a href="#"><i class="fa fa-cc-amex"></i></a>
 											</div>
 										
@@ -645,7 +503,7 @@ $statement4->closeCursor();
 					</div>
 				</div>
 				<div class="footer-copyright text-center">
-					© 2018 GROUP PROJECT
+					© 2018 PHONEBITS - Group Project 
 				</div>
 			</footer>
 		</div>
