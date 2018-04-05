@@ -15,6 +15,17 @@ $statement= $db->prepare($queryBasketItem);
 $statement->execute();
 $basket = $statement->fetchAll();
 $statement->closeCursor();
+//get total per ID USER
+$queryTotBasket = 'SELECT SUM(itemBasketQTY*itemBasketPrice) AS total
+FROM basket
+WHERE userID = 1;';
+$statement1= $db->prepare($queryTotBasket);
+$statement1->execute();
+$totalBasket = $statement1->fetch();
+$statement1->closeCursor();
+
+
+
 ?>
 
 <!doctype html>
@@ -263,25 +274,29 @@ $statement->closeCursor();
 										</table>
 									</form>
 									<div class="cart-collaterals">
-										
 										<div class="cross-sells">
 											<h2>Your Payment Details</h2>
+											<form action="checkout_basket.php" method="post">
 											<div class="form-group">
-								<label>Credit Card Number</label>
-								<input type="text" id="username" name="number" required class="form-control" value="" placeholder="1234 5678 9012 3456">
-							</div>
-							<div class="form-group">
-								<label for="name">Name on Card</label>
-								<input type="text" id="username" required value="" name="name" class="form-control" placeholder="Surname Firstname">
-							</div>
-										<div class="form-group">
-								<label for="expiry date">Expiry Date</label>
-								<input type="text" id="username" required value="" name="expiry date" class="form-control" placeholder="MM/YYYY">
-							</div>
-										<div class="form-group">
-								<label for="ccv">CCV</label>
-								<input type="text" id="username" required value="" name="ccv" class="form-control" placeholder="123">
-							</div>
+												<label>Credit Card Number</label>
+												<input type="text" id="card_number" name="card_number" required class="form-control" value="" placeholder="1234 5678 9012 3456">
+											</div>
+											<div class="form-group">
+												<label for="name">Name on Card</label>
+												<input type="text" id="card_name" required value="" name="card_name" class="form-control" placeholder="Surname Firstname">
+											</div>
+											<div class="form-group">
+												<label for="expiry date">Expiry Month</label>
+												<input type="text" id="card_exp_month" required value="" name="card_exp_month" class="form-control" placeholder="MM/YYYY">
+											</div>
+											<div class="form-group">
+												<label for="expiry date">Expiry Year</label>
+												<input type="text" id="card_exp_year" required value="" name="card_exp_year" class="form-control" placeholder="MM/YYYY">
+											</div>
+											<div class="form-group">
+												<label for="ccv">CCV</label>
+												<input type="text" id="card_ccv" required value="" name="card_ccv" class="form-control" placeholder="123">
+											</div>
 											</ul>
 										</div>
 										
@@ -290,7 +305,7 @@ $statement->closeCursor();
 											<table>
 												<tr class="cart-subtotal">
 													<th>Subtotal</th>
-													<td><span class="amount">£<?php echo $totalBasket; ?></span></td>
+													<td><span class="amount">£<?php echo $totalBasket['total']; ?></span></td>
 												</tr>
 												<tr class="shipping">
 													<th>Shipping</th>
@@ -298,12 +313,14 @@ $statement->closeCursor();
 												</tr>
 												<tr class="order-total">
 													<th>Total</th>
-													<td><strong><span class="amount">£56.00</span></strong></td>
+													<td><strong><span class="amount">£<?php echo $totalBasket['total']; ?></span></strong></td>
 												</tr>
 											</table><br>
 											<div class="wc-proceed-to-checkout">
-												<a href="#" class="checkout-button button alt wc-forward rounded">Submit Payment</a>
-											</div>
+												
+												<button type=submit class="checkout-button button alt wc-forward rounded">Submit Payment</a>
+												
+											</div></form>
 										</div>
 									</div>
 								</div>

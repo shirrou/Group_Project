@@ -30,7 +30,7 @@ $statement4->closeCursor();
 //query to get the item
 $queryItems = 'SELECT itemCategory.itemCatName, item.itemName, item.itemCatID, item.itemID, item.frontImg, item.backImg, itemdetails.itemPrice, itemdetails.memoryID, memory.memorySize, color.colorName
 FROM itemdetails
-INNER JOIN itemCategory ON itemCategory.itemCatID = itemdetails.itemCatID AND itemdetails.itemCatID = itemcategory.itemCatID 
+INNER JOIN itemCategory ON itemCategory.itemCatID = itemdetails.itemCatID AND itemdetails.itemCatID = itemCategory.itemCatID 
 INNER JOIN memory ON memory.memoryID = itemdetails.memoryID
 INNER JOIN color ON color.colorID = itemdetails.colorID
 INNER JOIN item ON item.itemID = itemdetails.itemID and itemdetails.itemCatID = item.itemCatID
