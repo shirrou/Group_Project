@@ -191,7 +191,7 @@ CREATE TABLE `itemdetails` (
   CONSTRAINT `itemID` FOREIGN KEY (`itemID`) REFERENCES `item` (`itemID`),
   CONSTRAINT `itemdetails_ibfk_1` FOREIGN KEY (`memoryID`) REFERENCES `memory` (`memoryID`),
   CONSTRAINT `itemdetails_ibfk_2` FOREIGN KEY (`colorID`) REFERENCES `color` (`colorID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `itemdetails` */
 
@@ -292,14 +292,15 @@ CREATE TABLE `order` (
 DROP TABLE IF EXISTS `paymentdetail`;
 
 CREATE TABLE `paymentdetail` (
-  `payMetID` int(3) NOT NULL,
-  `cardNumber` int(16) unsigned zerofill NOT NULL,
+  `payMetID` int(11) DEFAULT NULL,
+  `cardNumber` bigint(16) unsigned zerofill NOT NULL,
   `expireDateMonth` int(2) unsigned zerofill NOT NULL,
   `expireDateYear` int(2) NOT NULL,
   `ccv` int(3) unsigned zerofill NOT NULL,
   `funds` double(8,2) NOT NULL,
-  PRIMARY KEY (`payMetID`,`cardNumber`),
-  CONSTRAINT `paymentdetail_ibfk_2` FOREIGN KEY (`payMetID`) REFERENCES `paymentmethod` (`payMetID`)
+  PRIMARY KEY (`cardNumber`),
+  KEY `payMetID` (`payMetID`),
+  CONSTRAINT `paymentdetail_ibfk_3` FOREIGN KEY (`payMetID`) REFERENCES `paymentmethod` (`payMetID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `paymentdetail` */
@@ -314,7 +315,7 @@ insert  into `paymentdetail`(`payMetID`,`cardNumber`,`expireDateMonth`,`expireDa
 (1,0000000000000007,03,12,031,356668.00),
 (1,0000000000000008,03,12,065,6548.00),
 (1,0000000000000009,03,12,658,654.32),
-(1,0000004294967295,03,12,031,3256.21);
+(1,1234567890123456,03,15,654,3215.21);
 
 /*Table structure for table `paymentmethod` */
 

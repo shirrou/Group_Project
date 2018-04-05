@@ -277,6 +277,7 @@ $statement1->closeCursor();
 										<div class="cross-sells">
 											<h2>Your Payment Details</h2>
 											<form action="checkout_basket.php" method="post">
+												<input type="hidden" name="total_price_to_deduct" id="total_price_to_deduct" value="<?php echo $totalBasket['total']; ?>">
 											<div class="form-group">
 												<label>Credit Card Number</label>
 												<input type="text" id="card_number" name="card_number" required class="form-control" value="" placeholder="1234 5678 9012 3456">
