@@ -5,7 +5,7 @@ require_once('database.php');
 $queryBasketItem = 'SELECT itemCategory.itemCatName, itemdetails.itemDetID, basket.itemID, item.itemName, itemdetails.itemPrice, basket.itemBasketQTY, color.colorName, basket.colorID, basket.itemCatID, basket.memoryID, memory.memorySize, basket.itemBasketPrice, basket.basketItemID, item.frontImg
 FROM basket
 INNER JOIN itemCategory ON itemCategory.itemCatID = basket.itemCatID
-INNER JOIN item ON item.itemID = basket.itemID
+INNER JOIN item ON item.itemID = basket.itemID AND item.itemCatID = basket.itemCatID
 INNER JOIN color ON color.colorID = basket.colorID
 INNER JOIN MEMORY ON memory.memoryID = basket.memoryID
 INNER JOIN itemDetails ON itemdetails.itemDetID = basket.itemDetID
@@ -15,8 +15,6 @@ $statement= $db->prepare($queryBasketItem);
 $statement->execute();
 $basket = $statement->fetchAll();
 $statement->closeCursor();
-//get the sum quantity for the same item
-
 ?>
 
 <!doctype html>
