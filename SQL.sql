@@ -43,17 +43,14 @@ CREATE TABLE `basket` (
   CONSTRAINT `basket_ibfk_4` FOREIGN KEY (`memoryID`) REFERENCES `memory` (`memoryID`),
   CONSTRAINT `basket_ibfk_5` FOREIGN KEY (`colorID`) REFERENCES `color` (`colorID`),
   CONSTRAINT `basket_ibfk_6` FOREIGN KEY (`itemDetID`) REFERENCES `itemdetails` (`itemDetID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 /*Data for the table `basket` */
 
 insert  into `basket`(`userID`,`itemID`,`itemCatID`,`memoryID`,`colorID`,`itemBasketQTY`,`itemDetID`,`itemBasketPrice`,`basketItemID`) values 
-(1,1,3,1,1,1,1,250.00,1),
-(1,1,3,2,2,500,3,200.00,6),
-(1,1,3,2,2,20,3,200.00,7),
-(1,1,3,2,2,10,3,200.00,8),
-(1,1,3,2,2,25,3,200.00,9),
-(1,1,3,2,2,25,3,200.00,10);
+(1,1,3,3,8,1,3,500.00,30),
+(1,2,7,27,22,3,22,300.00,35),
+(1,1,2,8,5,1,2,750.50,36);
 
 /*Table structure for table `color` */
 
@@ -126,7 +123,7 @@ CREATE TABLE `item` (
   PRIMARY KEY (`itemID`,`itemName`),
   KEY `itemCatID` (`itemCatID`),
   CONSTRAINT `item_ibfk_1` FOREIGN KEY (`itemCatID`) REFERENCES `itemcategory` (`itemCatID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `item` */
 
@@ -143,7 +140,7 @@ insert  into `item`(`itemCatID`,`itemID`,`itemName`,`itemDescription`,`releaseDa
 (5,2,'6','pouiu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia6Front.png','nokia6Back.png','nokia6CarPic1.png','nokia6CarPic2.png','nokia6CarPic3.png','nokia6CarPic4.png'),
 (4,2,'G6','asdfa',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'lgG6Front.png','lgG6Back.png','lgG6CarPic1.png','lgG6CarPic2.png','lgG6CarPic3.png','lgG6CarPic4.npng'),
 (7,2,'Galaxy S8','ert',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'samsungGalaxyS8Front.png','samsungGalaxyS8Back.png','samsungGalaxyS8CarPic1.png','samsungGalaxyS8CarPic2.png','samsungGalaxyS8CarPic3.png','samsungGalaxyS8CarPic4.png'),
-(1,2,'X plus','lkjlkjsdfasdfa','lkj',174,0.5,'6548',0.5,11,3,2147,'6548x6484','qssqsq','iphoneXPlusFront.png','iphoneXPlusBack.png','iphonXPlusCarPic1.png','iphonXPlusCarPic2.png','iphonXPlusCarPic3.png','iphonXPlusCarPic4.png'),
+(1,2,'X plus','lkjlkjsdfasdfa','lkj',174,0.5,'6548',0.5,11,3,2147,'6548x6484','qssqsq','iphoneXPlusFront.png','iphoneXPlusBack.png','iphoneXPlusCarPic1.png','iphoneXPlusCarPic2.png','iphoneXPlusCarPic3.png','iphoneXPlusCarPic4.png'),
 (5,3,'8','rtyu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia8Front.png','nokia8Back.png','nokia8CarPic1.png','nokia8CarPic2.png','nokia8CarPic3.png','nokia8CarPic4.png'),
 (4,3,'Q6','asdfa',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'lgQ6Front.png','lgQ6Back.png','lgQ6CarPic1.png','lgQ6CarPic2.png','lgQ6CarPic3.png','lgQ6CarPic4.npng'),
 (5,4,'8 Sirrocco','tyui',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia8SiroccoFront.png','nokia8SiroccoBack.png','nokia8SiroccoCarPic1.png','nokia8SiroccoCarPic2.png','nokia8SiroccoCarPic3.png','nokia8SiroccoCarPic4.png'),
@@ -157,11 +154,12 @@ CREATE TABLE `itemcategory` (
   `itemCatID` int(3) NOT NULL AUTO_INCREMENT,
   `itemCatName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`itemCatID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `itemcategory` */
 
 insert  into `itemcategory`(`itemCatID`,`itemCatName`) values 
+(0,'flagships'),
 (1,'Iphone'),
 (2,'Google'),
 (3,'Huawei'),
@@ -169,8 +167,7 @@ insert  into `itemcategory`(`itemCatID`,`itemCatName`) values
 (5,'Nokia'),
 (6,'OnePlus'),
 (7,'Samsung'),
-(8,'Sony'),
-(9,'flagships');
+(8,'Sony');
 
 /*Table structure for table `itemdetails` */
 
@@ -185,17 +182,21 @@ CREATE TABLE `itemdetails` (
   `itemPrice` double(5,2) NOT NULL,
   `memoryID` int(2) NOT NULL,
   `colorID` int(2) NOT NULL,
-  PRIMARY KEY (`itemDetID`),
+  PRIMARY KEY (`itemDetID`,`itemCatID`,`itemID`,`itemPrice`,`memoryID`,`colorID`),
+  KEY `memoryID` (`memoryID`),
+  KEY `colorID` (`colorID`),
   KEY `itemCatID` (`itemCatID`),
   KEY `itemID` (`itemID`),
-  CONSTRAINT `itemCatID` FOREIGN KEY (`itemCatID`) REFERENCES `memory` (`memoryID`),
-  CONSTRAINT `itemID` FOREIGN KEY (`itemID`) REFERENCES `memory` (`memoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  CONSTRAINT `itemCatID` FOREIGN KEY (`itemCatID`) REFERENCES `item` (`itemCatID`),
+  CONSTRAINT `itemID` FOREIGN KEY (`itemID`) REFERENCES `item` (`itemID`),
+  CONSTRAINT `itemdetails_ibfk_1` FOREIGN KEY (`memoryID`) REFERENCES `memory` (`memoryID`),
+  CONSTRAINT `itemdetails_ibfk_2` FOREIGN KEY (`colorID`) REFERENCES `color` (`colorID`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 /*Data for the table `itemdetails` */
 
 insert  into `itemdetails`(`itemDetID`,`itemCatID`,`itemID`,`itemQty`,`itemTreshold`,`itemPrice`,`memoryID`,`colorID`) values 
-(1,3,1,0,10,750.50,1,6),
+(1,3,1,10,10,750.50,1,6),
 (2,2,1,10,10,750.50,8,5),
 (3,3,1,10,10,500.00,3,8),
 (4,3,1,10,10,500.00,2,7),
@@ -203,7 +204,7 @@ insert  into `itemdetails`(`itemDetID`,`itemCatID`,`itemID`,`itemQty`,`itemTresh
 (6,5,2,10,10,895.99,21,17),
 (7,1,1,10,10,659.59,4,1),
 (8,1,1,10,10,250.00,6,4),
-(9,1,2,50,50,439.69,7,3),
+(9,1,2,10,50,439.69,7,3),
 (10,1,2,10,30,439.69,7,2),
 (11,4,1,10,10,250.00,10,9),
 (12,5,1,10,0,742.58,20,16),
@@ -213,11 +214,11 @@ insert  into `itemdetails`(`itemDetID`,`itemCatID`,`itemID`,`itemQty`,`itemTresh
 (16,5,2,10,2,259.00,21,12),
 (17,5,3,10,2,349.00,22,10),
 (18,5,4,10,2,490.00,23,11),
-(19,6,1,1,1,599.99,24,19),
-(20,6,2,1,1,610.99,25,20),
-(21,7,1,1,1,455.50,26,21),
-(22,7,2,1,1,625.00,27,22),
-(23,8,1,1,1,624.50,28,23);
+(19,6,1,10,1,599.99,24,19),
+(20,6,2,10,1,610.99,25,20),
+(21,7,1,10,10,455.50,26,21),
+(22,7,2,10,1,625.00,27,22),
+(23,8,1,10,10,624.50,28,23);
 
 /*Table structure for table `memory` */
 
@@ -275,17 +276,13 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `orderID` int(5) NOT NULL AUTO_INCREMENT,
   `userID` int(5) NOT NULL,
-  `itemID` int(5) DEFAULT NULL,
-  `itemCatID` int(5) DEFAULT NULL,
+  `itemDetID` int(5) DEFAULT NULL,
   `ordDate` date DEFAULT NULL,
   `ordQty` int(3) DEFAULT NULL,
   `total` int(8) DEFAULT NULL,
   PRIMARY KEY (`orderID`,`userID`),
   KEY `userID` (`userID`),
-  KEY `itemID` (`itemID`),
-  KEY `itemCatID` (`itemCatID`),
-  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `order_ibfk_3` FOREIGN KEY (`itemCatID`) REFERENCES `itemcategory` (`itemCatID`)
+  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `order` */
@@ -296,18 +293,28 @@ DROP TABLE IF EXISTS `paymentdetail`;
 
 CREATE TABLE `paymentdetail` (
   `payMetID` int(3) NOT NULL,
-  `orderID` int(5) NOT NULL,
-  `cardNumber` int(16) NOT NULL,
-  `expireDateMonth` int(2) DEFAULT NULL,
-  `expireDateYear` int(2) DEFAULT NULL,
-  `ccv` int(3) DEFAULT NULL,
-  PRIMARY KEY (`payMetID`,`orderID`,`cardNumber`),
-  KEY `orderID` (`orderID`),
-  CONSTRAINT `paymentdetail_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`),
+  `cardNumber` int(16) unsigned zerofill NOT NULL,
+  `expireDateMonth` int(2) unsigned zerofill NOT NULL,
+  `expireDateYear` int(2) NOT NULL,
+  `ccv` int(3) unsigned zerofill NOT NULL,
+  `funds` double(8,2) NOT NULL,
+  PRIMARY KEY (`payMetID`,`cardNumber`),
   CONSTRAINT `paymentdetail_ibfk_2` FOREIGN KEY (`payMetID`) REFERENCES `paymentmethod` (`payMetID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `paymentdetail` */
+
+insert  into `paymentdetail`(`payMetID`,`cardNumber`,`expireDateMonth`,`expireDateYear`,`ccv`,`funds`) values 
+(1,0000000000000001,03,12,031,0.00),
+(1,0000000000000002,03,12,031,150.25),
+(1,0000000000000003,03,12,031,562.23),
+(1,0000000000000004,03,12,031,3256.21),
+(1,0000000000000005,03,12,032,35568.25),
+(1,0000000000000006,03,12,031,354.00),
+(1,0000000000000007,03,12,031,356668.00),
+(1,0000000000000008,03,12,065,6548.00),
+(1,0000000000000009,03,12,658,654.32),
+(1,0000004294967295,03,12,031,3256.21);
 
 /*Table structure for table `paymentmethod` */
 
@@ -317,9 +324,15 @@ CREATE TABLE `paymentmethod` (
   `payMetID` int(3) NOT NULL AUTO_INCREMENT,
   `payMetName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`payMetID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `paymentmethod` */
+
+insert  into `paymentmethod`(`payMetID`,`payMetName`) values 
+(1,'Visa Debit'),
+(2,'Visa Credit'),
+(3,'Amex'),
+(4,'Paypal');
 
 /*Table structure for table `supplier` */
 
@@ -379,7 +392,7 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`userID`,`firstName`,`midName`,`lastName`,`email`,`pass`,`postCode`,`addressLine1`,`addressLine2`,`userType`) values 
-(1,'Andrea','midname.txt','Bizzotto','andrea_bizz8@hotmail.com','123456','E15 4E','21, Maiden Road',NULL,1),
+(1,'Andrea','-','Bizzotto','andrea_bizz8@hotmail.com','123456','E15 4E','21, Maiden Road',NULL,1),
 (2,'asdfa','asdf','asdf','asdfasdf','asdf','asdf','asdf','asdf',1),
 (3,'Ciao','VCiao','CIao','andrea@gmail.com','ciao','','','',1);
 
@@ -397,6 +410,33 @@ CREATE TABLE `usercategory` (
 
 insert  into `usercategory`(`userCatId`,`userCatName`) values 
 (1,'admin');
+
+/*Table structure for table `wishlist` */
+
+DROP TABLE IF EXISTS `wishlist`;
+
+CREATE TABLE `wishlist` (
+  `userID` int(5) DEFAULT NULL,
+  `itemDetID` int(5) DEFAULT NULL,
+  `itemCatID` int(3) DEFAULT NULL,
+  `itemID` int(3) DEFAULT NULL,
+  `memoryID` int(3) DEFAULT NULL,
+  `colorID` int(3) DEFAULT NULL,
+  KEY `userID` (`userID`),
+  KEY `itemDetID` (`itemDetID`),
+  KEY `itemCatID` (`itemCatID`),
+  KEY `itemID` (`itemID`),
+  KEY `memoryID` (`memoryID`),
+  KEY `colorID` (`colorID`),
+  CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`itemDetID`) REFERENCES `itemdetails` (`itemDetID`),
+  CONSTRAINT `wishlist_ibfk_3` FOREIGN KEY (`itemCatID`) REFERENCES `itemdetails` (`itemCatID`),
+  CONSTRAINT `wishlist_ibfk_4` FOREIGN KEY (`itemID`) REFERENCES `itemdetails` (`itemID`),
+  CONSTRAINT `wishlist_ibfk_5` FOREIGN KEY (`memoryID`) REFERENCES `memory` (`memoryID`),
+  CONSTRAINT `wishlist_ibfk_6` FOREIGN KEY (`colorID`) REFERENCES `color` (`colorID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `wishlist` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
