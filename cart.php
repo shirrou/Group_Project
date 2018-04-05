@@ -23,9 +23,6 @@ $statement1= $db->prepare($queryTotBasket);
 $statement1->execute();
 $totalBasket = $statement1->fetch();
 $statement1->closeCursor();
-
-
-
 ?>
 
 <!doctype html>
@@ -277,7 +274,9 @@ $statement1->closeCursor();
 										<div class="cross-sells">
 											<h2>Your Payment Details</h2>
 											<form action="checkout_basket.php" method="post">
-												<input type="hidden" name="total_price_to_deduct" id="total_price_to_deduct" value="<?php echo $totalBasket['total']; ?>">
+											<input type="hidden" name="total_price_to_deduct" id="total_price_to_deduct" value="<?php echo $totalBasket['total']; ?>">
+											<input type="hidden" name="item_det_id" id="item_det_id" value="<?php echo $basketItem['itemDetID']; ?>">
+											<input type="hidden" name="item_basket_qty" id="item_basket_qty" value="<?php echo $basketItem['itemBasketQTY']; ?>">
 											<div class="form-group">
 												<label>Credit Card Number</label>
 												<input type="text" id="card_number" name="card_number" required class="form-control" value="" placeholder="1234 5678 9012 3456">
@@ -578,42 +577,36 @@ $statement1->closeCursor();
 						2 items in the shopping cart
 					</div>
 					<div class="minicart-body">
+						<?php foreach($basket as $basketItem) :?>
 						<div class="cart-product clearfix">
 							<div class="cart-product-image">
 								<a class="cart-product-img" href="#">
-									<img width="300" height="300" src="images/products/product_80x80.jpg" alt=""/>
+									<img width="300" height="300" src="images/products/<?php echo $basketItem['frontImg']; ?>" alt=""/>
 								</a>
 							</div>
 							<div class="cart-product-details">
 								<div class="cart-product-title">
-									<a href="#">Samsung Galaxy S9</a>
+									<a href="#"><?php echo $basketItem['itemCatName']; ?>  <?php echo $basketItem['itemName']; ?></a>
 								</div>
 								<div class="cart-product-quantity-price">
-									1 x <span class="amount">&pound;699.00</span>
+									<?php echo $basketItem['itemBasketQTY']; ?> x <span class="amount">&pound;<?php echo $basketItem['itemBasketPrice']; ?></span>
 								</div>
 							</div>
-							<a href="#" class="remove" title="Remove this item">&times;</a>
+							<form title="Remove this item" action="removeItem.php" method="post">&times;
+								<input type="hidden" name="item_id" value="<?php echo $basketItem['itemID']; ?>">
+								<input type="hidden" name="item_cat_id" value="<?php echo $basketItem['itemCatID']; ?>">
+								<input type="hidden" name="memory_id" value="<?php echo $basketItem['memoryID']; ?>">
+								<input type="hidden" name="color_id" value="<?php echo $basketItem['colorID']; ?>">
+								<input type="hidden" name="item_det_id" value="<?php echo $basketItem['itemDetID']; ?>">
+								<input type="hidden" name="basket_item_id" value="<?php echo $basketItem['basketItemID']; ?>">
+								<input type="submit" value="&times;" class="remove">
+							</form>
 						</div>
-						<div class="cart-product clearfix">
-							<div class="cart-product-image">
-								<a class="cart-product-img" href="#">
-									<img width="300" height="300" src="images/products/product_80x80.jpg" alt=""/>
-								</a>
-							</div>
-							<div class="cart-product-details">
-								<div class="cart-product-title">
-									<a href="#">Huawei Mate 10</a>
-								</div>
-								<div class="cart-product-quantity-price">
-									1 x <span class="amount">&pound;599.00</span>
-								</div>
-							</div>
-							<a href="#" class="remove" title="Remove this item">&times;</a>
-						</div>
+						<?php endforeach; ?>
 					</div>
 					<div class="minicart-footer">
 						<div class="minicart-total">
-							Cart Subtotal <span class="amount">&pound;378.00</span>
+							Cart Subtotal <span class="amount">&pound;<?php echo $totalBasket['total']; ?></span>
 						</div>
 						<div class="minicart-actions clearfix">
 							<a class="viewcart-button button" href="#">

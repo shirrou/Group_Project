@@ -21,15 +21,15 @@ USE `testproject`;
 DROP TABLE IF EXISTS `basket`;
 
 CREATE TABLE `basket` (
-  `userID` INT(5) DEFAULT NULL,
-  `itemID` INT(3) DEFAULT NULL,
-  `itemCatID` INT(3) DEFAULT NULL,
-  `memoryID` INT(3) DEFAULT NULL,
-  `colorID` INT(3) DEFAULT NULL,
-  `itemBasketQTY` INT(2) DEFAULT NULL,
-  `itemDetID` INT(5) DEFAULT NULL,
-  `itemBasketPrice` DOUBLE(10,2) DEFAULT NULL,
-  `basketItemID` INT(3) NOT NULL AUTO_INCREMENT,
+  `userID` int(5) DEFAULT NULL,
+  `itemID` int(3) DEFAULT NULL,
+  `itemCatID` int(3) DEFAULT NULL,
+  `memoryID` int(3) DEFAULT NULL,
+  `colorID` int(3) DEFAULT NULL,
+  `itemBasketQTY` int(2) DEFAULT NULL,
+  `itemDetID` int(5) DEFAULT NULL,
+  `itemBasketPrice` double(10,2) DEFAULT NULL,
+  `basketItemID` int(3) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`basketItemID`),
   KEY `userID` (`userID`),
   KEY `itemID` (`itemID`),
@@ -43,11 +43,11 @@ CREATE TABLE `basket` (
   CONSTRAINT `basket_ibfk_4` FOREIGN KEY (`memoryID`) REFERENCES `memory` (`memoryID`),
   CONSTRAINT `basket_ibfk_5` FOREIGN KEY (`colorID`) REFERENCES `color` (`colorID`),
   CONSTRAINT `basket_ibfk_6` FOREIGN KEY (`itemDetID`) REFERENCES `itemdetails` (`itemDetID`)
-) ENGINE=INNODB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 /*Data for the table `basket` */
 
-INSERT  INTO `basket`(`userID`,`itemID`,`itemCatID`,`memoryID`,`colorID`,`itemBasketQTY`,`itemDetID`,`itemBasketPrice`,`basketItemID`) VALUES 
+insert  into `basket`(`userID`,`itemID`,`itemCatID`,`memoryID`,`colorID`,`itemBasketQTY`,`itemDetID`,`itemBasketPrice`,`basketItemID`) values 
 (1,1,3,3,8,1,3,500.00,30),
 (1,2,7,27,22,3,22,300.00,35),
 (1,1,2,8,5,1,2,750.50,36);
@@ -57,20 +57,20 @@ INSERT  INTO `basket`(`userID`,`itemID`,`itemCatID`,`memoryID`,`colorID`,`itemBa
 DROP TABLE IF EXISTS `color`;
 
 CREATE TABLE `color` (
-  `colorID` INT(3) NOT NULL AUTO_INCREMENT,
-  `colorName` VARCHAR(15) NOT NULL,
-  `itemCatID` INT(3) NOT NULL,
-  `itemID` INT(3) NOT NULL,
+  `colorID` int(3) NOT NULL AUTO_INCREMENT,
+  `colorName` varchar(15) NOT NULL,
+  `itemCatID` int(3) NOT NULL,
+  `itemID` int(3) NOT NULL,
   PRIMARY KEY (`colorID`),
   KEY `colorItemID` (`itemID`),
   KEY `colorItemCatID` (`itemCatID`),
   CONSTRAINT `colorItemCatID` FOREIGN KEY (`itemCatID`) REFERENCES `itemdetails` (`itemCatID`),
   CONSTRAINT `colorItemID` FOREIGN KEY (`itemID`) REFERENCES `itemdetails` (`itemID`)
-) ENGINE=INNODB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `color` */
 
-INSERT  INTO `color`(`colorID`,`colorName`,`itemCatID`,`itemID`) VALUES 
+insert  into `color`(`colorID`,`colorName`,`itemCatID`,`itemID`) values 
 (1,'Black',1,1),
 (2,'White',2,1),
 (3,'Red',2,1),
@@ -100,59 +100,59 @@ INSERT  INTO `color`(`colorID`,`colorName`,`itemCatID`,`itemID`) VALUES
 DROP TABLE IF EXISTS `item`;
 
 CREATE TABLE `item` (
-  `itemCatID` INT(3) DEFAULT NULL,
-  `itemID` INT(3) NOT NULL AUTO_INCREMENT,
-  `itemName` VARCHAR(100) NOT NULL,
-  `itemDescription` VARCHAR(250) DEFAULT NULL,
-  `releaseDate` VARCHAR(50) DEFAULT NULL,
-  `weight` INT(3) DEFAULT NULL,
-  `wide` DOUBLE(1,1) DEFAULT NULL,
-  `operatingSystem` VARCHAR(30) DEFAULT NULL,
-  `screenSize` DOUBLE(1,1) DEFAULT NULL,
-  `camera` INT(2) DEFAULT NULL,
-  `ramMemory` INT(2) DEFAULT NULL,
-  `battery` INT(4) DEFAULT NULL,
-  `resolution` VARCHAR(9) DEFAULT NULL,
-  `processor` VARCHAR(50) DEFAULT NULL,
-  `frontImg` VARCHAR(250) DEFAULT NULL,
-  `backImg` VARCHAR(250) DEFAULT NULL,
-  `carPic1` VARCHAR(200) DEFAULT NULL,
-  `carPic2` VARCHAR(200) DEFAULT NULL,
-  `carPic3` VARCHAR(200) DEFAULT NULL,
-  `carPic4` VARCHAR(200) DEFAULT NULL,
+  `itemCatID` int(3) DEFAULT NULL,
+  `itemID` int(3) NOT NULL AUTO_INCREMENT,
+  `itemName` varchar(100) NOT NULL,
+  `itemDescription` varchar(100) DEFAULT NULL,
+  `releaseDate` varchar(50) DEFAULT NULL,
+  `weight` int(3) DEFAULT NULL,
+  `wide` double(1,1) DEFAULT NULL,
+  `operatingSystem` varchar(30) DEFAULT NULL,
+  `screenSize` double(1,1) DEFAULT NULL,
+  `camera` int(2) DEFAULT NULL,
+  `ramMemory` int(2) DEFAULT NULL,
+  `battery` int(4) DEFAULT NULL,
+  `resolution` varchar(9) DEFAULT NULL,
+  `processor` varchar(50) DEFAULT NULL,
+  `frontImg` varchar(250) DEFAULT NULL,
+  `backImg` varchar(250) DEFAULT NULL,
+  `carPic1` varchar(200) DEFAULT NULL,
+  `carPic2` varchar(200) DEFAULT NULL,
+  `carPic3` varchar(200) DEFAULT NULL,
+  `carPic4` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`itemID`,`itemName`),
   KEY `itemCatID` (`itemCatID`),
   CONSTRAINT `item_ibfk_1` FOREIGN KEY (`itemCatID`) REFERENCES `itemcategory` (`itemCatID`)
-) ENGINE=INNODB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `item` */
 
-INSERT  INTO `item`(`itemCatID`,`itemID`,`itemName`,`itemDescription`,`releaseDate`,`weight`,`wide`,`operatingSystem`,`screenSize`,`camera`,`ramMemory`,`battery`,`resolution`,`processor`,`frontImg`,`backImg`,`carPic1`,`carPic2`,`carPic3`,`carPic4`) VALUES 
-(5,1,'3', 'The phone has a polycarbonate back shell with a metal frame, similar styling cue with Nokia Lumia 925' ,'June 2017' , 140 , 0.3 , 'Android 7.0(Nougat)' , 5.0 , 8 , 2 , 2630 , '720x1280' , 'Quad-core 1.4 GHz Cortex-A53' ,'nokia3Front.png','nokia3Back.png','nokia3CarPic1.png','nokia3CarPic2.png','nokia3CarPic3.png','nokia3CarPic4.png'),
-(6,1,'5', 'It is the successor to the OnePlus 3T released in 2016' ,'June 2017' , 153 , 0.2 , 'Android 7.1.1(Nougat)' , 5.5 , 16 , 6 , 3300 , '1080x1920' , 'Octa-core (4x2.45 GHz Kryo & 4x1.9 GHz Kryo)' ,'onePlus5Front.png','onePlus5Back.png','onePlus5CarPic1.png','onePlus5CarPic2.png','onePlus5CarPic3.png','onePlus5CarPic4.png'),
-(7,1,'Galasy S9','The Galaxy S9 and S9+ has nearly identical features of the S8 batch, with the same display size and aspect ratio, just like its predecessor', 'March 2018' , 163 , 0.3 , 'Android 8.0 (Oreo)' , 5.8 , 12 , 4 , 3000 , '1440x2960' , 'Octa-core (4x2.7 GHz Mongoose M3)' ,'samsungGalaxyS9Front.png','samsungGalaxyS9Back.png','samsungGalaxyS9CarPic1.png','samsungGalaxyS9CarPic2.png','samsungGalaxyS9CarPic3.png','samsungGalaxyS9CarPic4.png'),
-(3,1,'Mate 10','The Huawei Mate 10, Huawei Mate 10 Pro and Huawei Mate 10 Porsche Design are high-end Android smartphones, designed and marketed by Huawei as part of the Huawei Mate series', 'November 2017' , 186 , 0.3 , 'Android 8.0 (Oreo)' , 5.9 , 20 , 4 , 4000 , '1440x2560' , 'Octa-core (4x2.4 GHz Cortex-A73)' ,'huaweiMate10Front.png','huaweiMate10Back.png','huaweiMate10CarPic1.png','huaweiMate10CarPic2.png','huaweiMate10CarPic3.png','huaweiMate10CarPic4.png'),
-(2,1,'Pixel 2','Pixel 2 and Pixel 2 XL are Android smartphones designed, developed and marketed by Google', 'October 2017' , 143 , 0.3 , 'Android 8.0' , 5.0 , 12 , 4 , 2700 , '1080x1920' , 'Octa-core (4x2.35 GHz Kryo)' ,'googlePixel2Front.png','googlePixel2Back.png','googlePixel2CarPic1.png','googlePixel2CarPic2.png','googlePixel2CarPic3.png','googlePixel2CarPic4.png'),
-(4,1,'V30','LG V30 is an Android phablet manufactured by LG Electronics as part of the LG V series', 'September 2017' , 158 , 0.2 , 'Android 7.1.2 (Nougat)' , 6.0 , 16 , 4 , 3300 , '1440x2880' , 'Octa-core (4x2.45 GHz Kryo)' , 'lgV30Front.png','lgV30Back.png','lgV30CarPic1.png','lgV30CarPic2.png','lgV30CarPic3.png','lgV30CarPic4.png'),
-(1,1,'X','Phone X ("X" pronounced "ten" /tɛn/)[9] is a smartphone designed, developed, and marketed by Apple Inc', 'October 2017' , 174 , 0.3 , 'IOS 11.1.1' , 5.8 , 12 , 3 , 2716 , '1125x2436' , 'Hexa-core 2.39 GHz (2x Monsoon + 4x Mistral)' ,'iphoneXFront.png','iphoneXBack.png','iphoneXCarPic1.png','iphoneXCarPic2.png','iphoneXCarPic3.png','iphoneXCarPic4.png'),
-(8,1,'Xperia XZ2','The Sony Xperia XZ2 is an Android smartphone manufactured and marketed by Sony', 'April 2018' , 198 , 0.4 , 'Android 8.0 (Oreo)' , 5.7 , 19 , 4 , 3180 , '1080x2160' , 'Octa-core (4x2.7 GHz Kryo 385 Gold)' ,'sonyXperiaXZ2Front.png','sonyXperiaXZ2Back.png','sonyXperiaXZ2CarPic1.png','sonyXperiaXZ2CarPic2.png','sonyXperiaXZ2CarPic3.png','sonyXperiaXZ2CarPic4.png'),
-(6,2,'5T','The OnePlus 5T is an Android smartphone designed, developed and marketed by OnePlus.', 'November 2017' , 162 , 0.2 , 'Android 7.1.1(Nougat)' , 6.0 , 16 , 8 , 3300 , '1080x2160' , 'Octa-core (4x2.45 GHz Kryo)' ,'onePlus5TFront.png','onePlus5TBack.png','onePlus5TCarPic1.png','onePlus5TCarPic2.png','onePlus5CarPic3.png','onePlus5TCarPic4.png'),
-(5,2,'6','The Nokia 6 (2017) is a Nokia-branded upper-mid-range smartphone running the Android operating system.', 'January 2017' , 169 , 0.3 , 'Android 7.1.1(Nougat)' , 5.5 , 16 , 4 , 3000 , '1080x1920' , 'Octa-core 1.4 GHz Cortex-A53' ,'nokia6Front.png','nokia6Back.png','nokia6CarPic1.png','nokia6CarPic2.png','nokia6CarPic3.png','nokia6CarPic4.png'),
-(4,2,'G6','The LG G6 is an Android smartphone developed by LG Electronics as part of the LG G series', 'March 2017' , 163 , 0.3 , 'Android 7.0(Nougat)' , 5.7 , 13 , 4 , 3300 , '1440x2880' , 'Quad-core (2x2.35 GHz Kryo)' ,'lgG6Front.png','lgG6Back.png','lgG6CarPic1.png','lgG6CarPic2.png','lgG6CarPic3.png','lgG6CarPic4.npng'),
-(7,2,'Galaxy S8','he Samsung Galaxy S8, Samsung Galaxy S8+ (shortened to S8 and S8+, respectively) and Samsung Galaxy S8 Active are Android smartphones produced by Samsung Electronics as part of the Samsung Galaxy S series', 'April 2017' , 155 , 0.3 , 'Android 7.0(Nougat)' , 5.8 , 12 , 4 , 3000 , '1440x2960' , 'Octa-core (4x2.3 GHz Mongoose M2)' ,'samsungGalaxyS8Front.png','samsungGalaxyS8Back.png','samsungGalaxyS8CarPic1.png','samsungGalaxyS8CarPic2.png','samsungGalaxyS8CarPic3.png','samsungGalaxyS8CarPic4.png'),
-(1,2,'X plus','Phone X ("X" pronounced "ten" /tɛn/)[9] is a smartphone designed, developed, and marketed by Apple Inc', '' , 174 , 0.5 , '6548',0.5,11,3,2147,'6548x6484','qssqsq','iphoneXPlusFront.png','iphoneXPlusBack.png','iphoneXPlusCarPic1.png','iphoneXPlusCarPic2.png','iphoneXPlusCarPic3.png','iphoneXPlusCarPic4.png'),
-(5,3,'8','Nokia 8 is a high-end Nokia-branded smartphone running the Android operating system.', 'October 2017' , 160 , 0.3 , 'Android 7.1.1(Nougat)' , 5.3 , 13 , 6 , 3090 , '1440x2560' , 'Octa-core (4x2.5 GHz Kryo)' ,'nokia8Front.png','nokia8Back.png','nokia8CarPic1.png','nokia8CarPic2.png','nokia8CarPic3.png','nokia8CarPic4.png'),
-(4,3,'Q6','The LG Q6 is an Android smartphone developed by LG Electronics as part of the LG G series.', 'August 2017' , 149 , 0.3 , 'Android 7.1.1(Nougat)' , 5.5 , 13 , 4 , 3000 , '1080x2160' , 'Octa-core 1.4 GHz Cortex-A53' ,'lgQ6Front.png','lgQ6Back.png','lgQ6CarPic1.png','lgQ6CarPic2.png','lgQ6CarPic3.png','lgQ6CarPic4.npng'),
-(5,4,'8 Sirrocco','Nokia 8 is a high-end Nokia-branded smartphone running the Android operating system.', 'April 2018' , 150 , 0.2 , 'Android 8.0 (Oreo)' , 5.5 , 12 , 6 , 3260 , '1440x2560' , 'Octa-core (4x2.5 GHz Kryo)' ,'nokia8SiroccoFront.png','nokia8SiroccoBack.png','nokia8SiroccoCarPic1.png','nokia8SiroccoCarPic2.png','nokia8SiroccoCarPic3.png','nokia8SiroccoCarPic4.png'),
-(4,4,'V20','LG V20 is an Android phablet manufactured by LG Electronics as part of the LG V series', 'October 2016' , 174 , 0.3 , 'Android 7.0(Nougat)' , 5.7 , 16 , 4 , 3200 , '1440x2560' , 'Quad-core (2x2.15 GHz Kryo)' ,'lgV20Front.png','lgV20Back.png','lgV20CarPic1.png','lgV20CarPic2.png','lgV20CarPic3.png','lgV20CarPic4.npng');
+insert  into `item`(`itemCatID`,`itemID`,`itemName`,`itemDescription`,`releaseDate`,`weight`,`wide`,`operatingSystem`,`screenSize`,`camera`,`ramMemory`,`battery`,`resolution`,`processor`,`frontImg`,`backImg`,`carPic1`,`carPic2`,`carPic3`,`carPic4`) values 
+(5,1,'3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia3Front.png','nokia3Back.png','nokia3CarPic1.png','nokia3CarPic2.png','nokia3CarPic3.png','nokia3CarPic4.png'),
+(6,1,'5','asdfa','asdfas',654,0.5,'asdf',0.2,11,2,6548,NULL,NULL,'onePlus5Front.png','onePlus5Back.png','onePlus5CarPic1.png','onePlus5CarPic2.png','onePlus5CarPic3.png','onePlus5CarPic4.png'),
+(7,1,'Galasy S9','asdlfkjoij',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'samsungGalaxyS9Front.png','samsungGalaxyS9Back.png','samsungGalaxyS9CarPic1.png','samsungGalaxyS9CarPic2.png','samsungGalaxyS9CarPic3.png','samsungGalaxyS9CarPic4.png'),
+(3,1,'Mate 10','asdfasdf','sdfadf',174,0.9,'asdf',0.5,12,3,2715,'2135X6548','ASDFA','huaweiMate10Front.png','huaweiMate10Back.png','huaweiMate10CarPic1.png','huaweiMate10CarPic2.png','huaweiMate10CarPic3.png','huaweiMate10CarPic4.png'),
+(2,1,'Pixel 2','KJH','15-12-2018',150,0.5,'ASDF',0.5,11,2,2156,'2346x1564','add','googlePixel2Front.png','googlePixel2Back.png','googlePixel2CarPic1.png','googlePixel2CarPic2.png','googlePixel2CarPic3.png','googlePixel2CarPic4.png'),
+(4,1,'V30','asdfa','asdf',154,0.2,'6548',0.1,12,2,6548,'6548x6548','asdf','lgV30Front.png','lgV30Back.png','lgV30CarPic1.png','lgV30CarPic2.png','lgV30CarPic3.png','lgV30CarPic4.png'),
+(1,1,'X','iphoneX.txt','15-10-2018',174,0.9,'iOs 11.1.1',0.9,12,3,2716,'2346x1254','A11','iphoneXFront.png','iphoneXBack.png','iphoneXCarPic1.png','iphoneXCarPic2.png','iphoneXCarPic3.png','iphoneXCarPic4.png'),
+(8,1,'Xperia XZ2','asldifnaosifno','asldkfnoih',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'sonyXperiaXZ2Front.png','sonyXperiaXZ2Back.png','sonyXperiaXZ2CarPic1.png','sonyXperiaXZ2CarPic2.png','sonyXperiaXZ2CarPic3.png','sonyXperiaXZ2CarPic4.png'),
+(6,2,'5T','erty',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'onePlus5TFront.png','onePlus5TBack.png','onePlus5TCarPic1.png','onePlus5TCarPic2.png','onePlus5CarPic3.png','onePlus5TCarPic4.png'),
+(5,2,'6','pouiu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia6Front.png','nokia6Back.png','nokia6CarPic1.png','nokia6CarPic2.png','nokia6CarPic3.png','nokia6CarPic4.png'),
+(4,2,'G6','asdfa',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'lgG6Front.png','lgG6Back.png','lgG6CarPic1.png','lgG6CarPic2.png','lgG6CarPic3.png','lgG6CarPic4.npng'),
+(7,2,'Galaxy S8','ert',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'samsungGalaxyS8Front.png','samsungGalaxyS8Back.png','samsungGalaxyS8CarPic1.png','samsungGalaxyS8CarPic2.png','samsungGalaxyS8CarPic3.png','samsungGalaxyS8CarPic4.png'),
+(1,2,'X plus','lkjlkjsdfasdfa','lkj',174,0.5,'6548',0.5,11,3,2147,'6548x6484','qssqsq','iphoneXPlusFront.png','iphoneXPlusBack.png','iphoneXPlusCarPic1.png','iphoneXPlusCarPic2.png','iphoneXPlusCarPic3.png','iphoneXPlusCarPic4.png'),
+(5,3,'8','rtyu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia8Front.png','nokia8Back.png','nokia8CarPic1.png','nokia8CarPic2.png','nokia8CarPic3.png','nokia8CarPic4.png'),
+(4,3,'Q6','asdfa',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'lgQ6Front.png','lgQ6Back.png','lgQ6CarPic1.png','lgQ6CarPic2.png','lgQ6CarPic3.png','lgQ6CarPic4.npng'),
+(5,4,'8 Sirrocco','tyui',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'nokia8SiroccoFront.png','nokia8SiroccoBack.png','nokia8SiroccoCarPic1.png','nokia8SiroccoCarPic2.png','nokia8SiroccoCarPic3.png','nokia8SiroccoCarPic4.png'),
+(4,4,'V20','lkjlkj',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'lgV20Front.png','lgV20Back.png','lgV20CarPic1.png','lgV20CarPic2.png','lgV20CarPic3.png','lgV20CarPic4.npng');
 
 /*Table structure for table `itemcategory` */
 
 DROP TABLE IF EXISTS `itemcategory`;
 
 CREATE TABLE `itemcategory` (
-  `itemCatID` INT(3) NOT NULL AUTO_INCREMENT,
-  `itemCatName` VARCHAR(100) DEFAULT NULL,
+  `itemCatID` int(3) NOT NULL AUTO_INCREMENT,
+  `itemCatName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`itemCatID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 

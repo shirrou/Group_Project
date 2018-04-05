@@ -1,3 +1,30 @@
+<?php
+require_once('database.php');
+//Select all the item from basket table
+//query to get the item
+$queryBasketItem = 'SELECT itemCategory.itemCatName, itemdetails.itemDetID, basket.itemID, item.itemName, itemdetails.itemPrice, basket.itemBasketQTY, color.colorName, basket.colorID, basket.itemCatID, basket.memoryID, memory.memorySize, basket.itemBasketPrice, basket.basketItemID, item.frontImg
+FROM basket
+INNER JOIN itemCategory ON itemCategory.itemCatID = basket.itemCatID
+INNER JOIN item ON item.itemID = basket.itemID AND item.itemCatID = basket.itemCatID
+INNER JOIN color ON color.colorID = basket.colorID
+INNER JOIN MEMORY ON memory.memoryID = basket.memoryID
+INNER JOIN itemDetails ON itemdetails.itemDetID = basket.itemDetID
+WHERE userID = 1
+GROUP BY basketItemID;';
+$statement= $db->prepare($queryBasketItem);
+$statement->execute();
+$basket = $statement->fetchAll();
+$statement->closeCursor();
+//get total per ID USER
+$queryTotBasket = 'SELECT SUM(itemBasketQTY*itemBasketPrice) AS total
+FROM basket
+WHERE userID = 1;';
+$statement1= $db->prepare($queryTotBasket);
+$statement1->execute();
+$totalBasket = $statement1->fetch();
+$statement1->closeCursor();
+?>
+
 <!doctype html>
 <html lang="en-US">
 	<head>
@@ -429,13 +456,47 @@
 			</div>
 			<div class="minicart-side-content">
 				<div class="minicart">
-					<div class="minicart-header no-items show">
-						Your shopping bag is empty.
+					<div class="minicart-header">
+						2 items in the shopping cart
+					</div>
+					<div class="minicart-body">
+						<?php foreach($basket as $basketItem) :?>
+						<div class="cart-product clearfix">
+							<div class="cart-product-image">
+								<a class="cart-product-img" href="#">
+									<img width="300" height="300" src="images/products/<?php echo $basketItem['frontImg']; ?>" alt=""/>
+								</a>
+							</div>
+							<div class="cart-product-details">
+								<div class="cart-product-title">
+									<a href="#"><?php echo $basketItem['itemCatName']; ?>  <?php echo $basketItem['itemName']; ?></a>
+								</div>
+								<div class="cart-product-quantity-price">
+									<?php echo $basketItem['itemBasketQTY']; ?> x <span class="amount">&pound;<?php echo $basketItem['itemBasketPrice']; ?></span>
+								</div>
+							</div>
+							<form title="Remove this item" action="removeItem.php" method="post">&times;
+								<input type="hidden" name="item_id" value="<?php echo $basketItem['itemID']; ?>">
+								<input type="hidden" name="item_cat_id" value="<?php echo $basketItem['itemCatID']; ?>">
+								<input type="hidden" name="memory_id" value="<?php echo $basketItem['memoryID']; ?>">
+								<input type="hidden" name="color_id" value="<?php echo $basketItem['colorID']; ?>">
+								<input type="hidden" name="item_det_id" value="<?php echo $basketItem['itemDetID']; ?>">
+								<input type="hidden" name="basket_item_id" value="<?php echo $basketItem['basketItemID']; ?>">
+								<input type="submit" value="&times;" class="remove">
+							</form>
+						</div>
+						<?php endforeach; ?>
 					</div>
 					<div class="minicart-footer">
+						<div class="minicart-total">
+							Cart Subtotal <span class="amount">&pound;<?php echo $totalBasket['total']; ?></span>
+						</div>
 						<div class="minicart-actions clearfix">
-							<a class="button no-item-button" href="#">
-								<span class="text">Go to the shop</span>
+							<a class="viewcart-button button" href="#">
+								<span class="text">View Cart</span>
+							</a>
+							<a class="checkout-button button" href="#">
+								<span class="text">Checkout</span>
 							</a>
 						</div>
 					</div>
