@@ -56,21 +56,11 @@ $statement->closeCursor();
 $queryTotBasket = 'SELECT SUM(itemBasketQTY*itemBasketPrice) AS total
 FROM basket
 WHERE userID = 1;';
-$statement1= $db->prepare($queryTotBasket);
-$statement1->execute();
-$totalBasket = $statement1->fetch();
-$statement1->closeCursor();
-//get total item in the basket ID USER
-$queryTotItemBasket = 'SELECT sum(itemBasketQTY) AS totItem
-FROM basket
-WHERE userID = 1;';
-$statement9= $db->prepare($queryTotItemBasket);
-$statement9->execute();
-$totalItemBasket = $statement9->fetch();
-$statement9->closeCursor();
+$statement4= $db->prepare($queryTotBasket);
+$statement4->execute();
+$totalBasket = $statement4->fetch();
+$statement4->closeCursor();
 ?>
-
-<!doctype html>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -96,10 +86,10 @@ $statement9->closeCursor();
 		<div class="offcanvas open">
 			<div class="offcanvas-wrap">
 				<div class="offcanvas-user clearfix">
-					<a class="offcanvas-user-wishlist-link" href="wishlist.html">
+					<a class="offcanvas-user-wishlist-link" href="wishlist.php">
 						<i class="fa fa-heart-o"></i> My Wishlist
 					</a>
-					<a class="offcanvas-user-account-link" href="my-account.html">
+					<a class="offcanvas-user-account-link" href="my-account.php">
 						<i class="fa fa-user"></i> Login
 					</a>
 				</div>
@@ -162,7 +152,7 @@ $statement9->closeCursor();
 													<i class="fa fa-search"></i>
 												</a>
 												<a class="cart-icon-mobile" href="#">
-													<i class="elegant_icon_bag"></i><span><?php echo $totalItemBasket['totItem']; ?></span>
+													<i class="elegant_icon_bag"></i><span>0</span>
 												</a>
 												<a class="navbar-brand" href="./">
 													<img class="logo" alt="logo" src="images/logo.png">
@@ -178,7 +168,7 @@ $statement9->closeCursor();
 													
 													<li><a href="#"><span class="underline">Compare</span></a></li>
 													
-													<li><a href="contact-us.html"><span class="underline">Contact Us</span></a></li>
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
 												</ul>	
 											</nav>
 													
@@ -194,13 +184,13 @@ $statement9->closeCursor();
 														<a class="minicart-link" href="#">
 															<span class="minicart-icon">
 																<i class="fa fa-shopping-cart"></i>
-																<span><?php echo $totalItemBasket['totItem']; ?></span>
+																<span>0</span>
 															</span>
 														</a>
 													</div>
 												</div>
 												<div class="navbar-wishlist">
-													<a class="wishlist" href="wishlist.html">
+													<a class="wishlist" href="wishlist.php">
 														<i class="fa fa-heart-o"></i>
 													</a>
 												</div>
@@ -855,7 +845,7 @@ It has a design which features 3D Corning Gorilla Glass 5 for a stunning look, w
 			<div class="minicart-side-content">
 				<div class="minicart">
 					<div class="minicart-header">
-						<?php echo $totalItemBasket['totItem']; ?> items in the shopping cart
+						2 items in the shopping cart
 					</div>
 					<div class="minicart-body">
 						<?php foreach($basket as $basketItem) :?>

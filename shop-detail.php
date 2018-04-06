@@ -80,17 +80,26 @@ $statement->closeCursor();
 $queryTotBasket = 'SELECT SUM(itemBasketQTY*itemBasketPrice) AS total
 FROM basket
 WHERE userID = 1;';
-$statement7= $db->prepare($queryTotBasket);
-$statement7->execute();
-$totalBasket = $statement7->fetch();
-$statement7->closeCursor();
+$statement1= $db->prepare($queryTotBasket);
+$statement1->execute();
+$totalBasket = $statement1->fetch();
+$statement1->closeCursor();
+//get total item in the basket ID USER
+$queryTotItemBasket = 'SELECT sum(itemBasketQTY) AS totItem
+FROM basket
+WHERE userID = 1;';
+$statement9= $db->prepare($queryTotItemBasket);
+$statement9->execute();
+$totalItemBasket = $statement9->fetch();
+$statement9->closeCursor();
 ?>
+
 <!doctype html>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>Shop Detail 1 | HTML Commerce Template</title>
+		<title>Contact Us | HTML Commerce Template</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
@@ -105,12 +114,7 @@ $statement7->closeCursor();
 		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all"/>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+	
 	</head>
 	<body>
 		<div class="offcanvas open">
@@ -125,56 +129,18 @@ $statement7->closeCursor();
 				</div>
 				<nav class="offcanvas-navbar">
 					<ul class="offcanvas-nav">
-						<li><a href="#">Home</a></li>
-						
-						<li class="menu-item-has-children dropdown">
-							<a href="shop-by-category.html" class="dropdown-hover">Shop <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Category <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Brands/Flagships? <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-									</ul>
-								</li>
-								<li class="menu-item-has-children dropdown-submenu">
-									<a href="#">Features <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-									</ul>
-								</li>
-								<li>
-									<a title="Mega Menu" href="#">Mega Menu</a>
-								</li>
-							</ul>
-						</li>
-						
-						<li class="menu-item-has-children dropdown">
-							<a href="#" class="dropdown-hover">Pages <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="about-us.html">About us</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-								<li><a href="faq.html">FAQ</a></li>
-								<li><a href="404.html">404</a></li>
-							</ul>
-						</li>
+						<ul class="nav navbar-nav primary-nav">
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
+													
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
+													
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+						</ul>
 					</ul>
+					
+						
 				</nav>
 			</div>
 		</div>
@@ -194,7 +160,7 @@ $statement7->closeCursor();
 								<div class="right-topbar">
 									<div class="user-login">
 										<ul class="nav top-nav">
-											<li><a data-rel="loginModal" href="#"> Login </a></li>
+											<li><a data-rel="loginModal" href="#"> <strong>Login</strong> </a></li>
 										</ul>
 									</div>
 								</div>
@@ -220,7 +186,7 @@ $statement7->closeCursor();
 													<i class="fa fa-search"></i>
 												</a>
 												<a class="cart-icon-mobile" href="#">
-													<i class="elegant_icon_bag"></i><span>0</span>
+													<i class="elegant_icon_bag"></i><span><?php echo $totalItemBasket['totItem']; ?></span>
 												</a>
 												<a class="navbar-brand" href="./">
 													<img class="logo" alt="logo" src="images/logo.png">
@@ -230,59 +196,16 @@ $statement7->closeCursor();
 											</div>
 											<nav class="collapse navbar-collapse primary-navbar-collapse">
 												<ul class="nav navbar-nav primary-nav">
-													<li><a href="index.html"><span class="underline">Home</span></a></li>
+													<li><a href="index.php"><span class="underline">Home</span></a></li>
 													
-													<li class="menu-item-has-children megamenu megamenu-fullwidth dropdown">
-														<a href="shop-by-category.html" class="dropdown-hover">
-															<span class="underline">Shop</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Category <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Thing 1?</a></li>
-																	<li><a href="shop-by-category.html">Thing 2?</a></li>
-																	<li><a href="shop-by-category.html">Thing 3?</a></li>
-																	<li><a href="shop-by-category.html">Thing 4?</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Brands/Flagships? <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-by-category.html">Samsung</a></li>
-																	<li><a href="shop-by-category.html">Nokia</a></li>
-																	<li><a href="shop-by-category.html">Apple</a></li>
-																	<li><a href="shop-by-category.html">LG</a></li>
-																</ul>
-															</li>
-															<li class="mega-col-3">
-																<h3 class="megamenu-title">Features <span class="caret"></span></h3>
-																<ul class="dropdown-menu">
-																	<li><a href="shop-detail-1.html">Single Product</a></li>
-																	<li><a href="shop-by-category.html">Multi Shoping</a></li>
-																	<li><a href="my-account.html">My Account</a></li>
-																	<li><a href="cart.html">Cart</a></li>
-																	<li><a href="cart-empty.html">Empty Cart</a></li>
-																	<li><a href="wishlist.html">Wishlist</a></li>
-																</ul>
-															</li>
-															
-														</ul>
-													</li>
+													<li><a href="shop-by-category.php"><span class="underline">Shop</span></a></li>
 													
-													<li class="menu-item-has-children dropdown">
-														<a href="#" class="dropdown-hover">
-															<span class="underline">Pages</span> <span class="caret"></span>
-														</a>
-														<ul class="dropdown-menu">
-															<li><a href="about-us.html">About us</a></li>
-															<li><a href="contact-us.html">Contact Us</a></li>
-															<li><a href="faq.html">FAQ</a></li>
-															<li><a href="404.html">404</a></li>
-														</ul>
-													</li>
-												</ul>
+													<li><a href="#"><span class="underline">Compare</span></a></li>
+													
+													<li><a href="contact-us.html"><span class="underline">Contact Us</span></a></li>
+												</ul>	
 											</nav>
+													
 											<div class="header-right">
 												<div class="navbar-search">
 													<a class="navbar-search-button" href="#">
@@ -295,7 +218,7 @@ $statement7->closeCursor();
 														<a class="minicart-link" href="#">
 															<span class="minicart-icon">
 																<i class="fa fa-shopping-cart"></i>
-																<span>0</span>
+																<span><?php echo $totalItemBasket['totItem']; ?></span>
 															</span>
 														</a>
 													</div>
@@ -1206,7 +1129,7 @@ $statement7->closeCursor();
 			<div class="minicart-side-content">
 				<div class="minicart">
 					<div class="minicart-header">
-						2 items in the shopping cart
+						<?php echo $totalItemBasket['totItem']; ?> items in the shopping cart
 					</div>
 					<div class="minicart-body">
 						<?php foreach($basket as $basketItem) :?>

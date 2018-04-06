@@ -23,6 +23,14 @@ $statement1= $db->prepare($queryTotBasket);
 $statement1->execute();
 $totalBasket = $statement1->fetch();
 $statement1->closeCursor();
+//get total item in the basket ID USER
+$queryTotItemBasket = 'SELECT sum(itemBasketQTY) AS totItem
+FROM basket
+WHERE userID = 1;';
+$statement9= $db->prepare($queryTotItemBasket);
+$statement9->execute();
+$totalItemBasket = $statement9->fetch();
+$statement9->closeCursor();
 ?>
 
 <!doctype html>
@@ -117,7 +125,7 @@ $statement1->closeCursor();
 													<i class="fa fa-search"></i>
 												</a>
 												<a class="cart-icon-mobile" href="#">
-													<i class="elegant_icon_bag"></i><span>0</span>
+													<i class="elegant_icon_bag"></i><span><?php echo $totalItemBasket['totItem']; ?></span>
 												</a>
 												<a class="navbar-brand" href="./">
 													<img class="logo" alt="logo" src="images/logo.png">
@@ -149,7 +157,7 @@ $statement1->closeCursor();
 														<a class="minicart-link" href="#">
 															<span class="minicart-icon">
 																<i class="fa fa-shopping-cart"></i>
-																<span>0</span>
+																<span><?php echo $totalItemBasket['totItem']; ?></span>
 															</span>
 														</a>
 													</div>
@@ -496,7 +504,7 @@ $statement1->closeCursor();
 			<div class="minicart-side-content">
 				<div class="minicart">
 					<div class="minicart-header">
-						2 items in the shopping cart
+						<?php echo $totalItemBasket['totItem']; ?> items in the shopping cart
 					</div>
 					<div class="minicart-body">
 						<?php foreach($basket as $basketItem) :?>

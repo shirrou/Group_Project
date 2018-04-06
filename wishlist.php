@@ -1,9 +1,28 @@
+<?php
+//get total per ID USER
+$queryTotBasket = 'SELECT SUM(itemBasketQTY*itemBasketPrice) AS total
+FROM basket
+WHERE userID = 1;';
+$statement1= $db->prepare($queryTotBasket);
+$statement1->execute();
+$totalBasket = $statement1->fetch();
+$statement1->closeCursor();
+//get total item in the basket ID USER
+$queryTotItemBasket = 'SELECT sum(itemBasketQTY) AS totItem
+FROM basket
+WHERE userID = 1;';
+$statement9= $db->prepare($queryTotItemBasket);
+$statement9->execute();
+$totalItemBasket = $statement9->fetch();
+$statement9->closeCursor();
+?>
+
 <!doctype html>
 <html lang="en-US">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-		<title>My Wishlist | PhoneBits</title>
+		<title>Contact Us | HTML Commerce Template</title>
 		<link rel="shortcut icon" href="images/favicon.ico">
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
@@ -18,6 +37,7 @@
 		<link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
 		<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all"/>
 
+	
 	</head>
 	<body>
 		<div class="offcanvas open">
@@ -26,7 +46,7 @@
 					<a class="offcanvas-user-wishlist-link" href="wishlist.php">
 						<i class="fa fa-heart-o"></i> My Wishlist
 					</a>
-					<a class="offcanvas-user-account-link" href="my-account.php">
+					<a class="offcanvas-user-account-link" href="my-account.html">
 						<i class="fa fa-user"></i> Login
 					</a>
 				</div>
@@ -89,7 +109,7 @@
 													<i class="fa fa-search"></i>
 												</a>
 												<a class="cart-icon-mobile" href="#">
-													<i class="elegant_icon_bag"></i><span>0</span>
+													<i class="elegant_icon_bag"></i><span><?php echo $totalItemBasket['totItem']; ?></span>
 												</a>
 												<a class="navbar-brand" href="./">
 													<img class="logo" alt="logo" src="images/logo.png">
@@ -105,7 +125,7 @@
 													
 													<li><a href="#"><span class="underline">Compare</span></a></li>
 													
-													<li><a href="contact-us.php"><span class="underline">Contact Us</span></a></li>
+													<li><a href="contact-us.html"><span class="underline">Contact Us</span></a></li>
 												</ul>	
 											</nav>
 													
@@ -121,7 +141,7 @@
 														<a class="minicart-link" href="#">
 															<span class="minicart-icon">
 																<i class="fa fa-shopping-cart"></i>
-																<span>0</span>
+																<span><?php echo $totalItemBasket['totItem']; ?></span>
 															</span>
 														</a>
 													</div>
@@ -513,13 +533,47 @@
 			</div>
 			<div class="minicart-side-content">
 				<div class="minicart">
-					<div class="minicart-header no-items show">
-						Your shopping bag is empty.
+					<div class="minicart-header">
+						<?php echo $totalItemBasket['totItem']; ?> items in the shopping cart
+					</div>
+					<div class="minicart-body">
+						<?php foreach($basket as $basketItem) :?>
+						<div class="cart-product clearfix">
+							<div class="cart-product-image">
+								<a class="cart-product-img" href="#">
+									<img width="300" height="300" src="images/products/<?php echo $basketItem['frontImg']; ?>" alt=""/>
+								</a>
+							</div>
+							<div class="cart-product-details">
+								<div class="cart-product-title">
+									<a href="#"><?php echo $basketItem['itemCatName']; ?>  <?php echo $basketItem['itemName']; ?></a>
+								</div>
+								<div class="cart-product-quantity-price">
+									<?php echo $basketItem['itemBasketQTY']; ?> x <span class="amount">&pound;<?php echo $basketItem['itemBasketPrice']; ?></span>
+								</div>
+							</div>
+							<form title="Remove this item" action="removeItem.php" method="post">&times;
+								<input type="hidden" name="item_id" value="<?php echo $basketItem['itemID']; ?>">
+								<input type="hidden" name="item_cat_id" value="<?php echo $basketItem['itemCatID']; ?>">
+								<input type="hidden" name="memory_id" value="<?php echo $basketItem['memoryID']; ?>">
+								<input type="hidden" name="color_id" value="<?php echo $basketItem['colorID']; ?>">
+								<input type="hidden" name="item_det_id" value="<?php echo $basketItem['itemDetID']; ?>">
+								<input type="hidden" name="basket_item_id" value="<?php echo $basketItem['basketItemID']; ?>">
+								<input type="submit" value="&times;" class="remove">
+							</form>
+						</div>
+						<?php endforeach; ?>
 					</div>
 					<div class="minicart-footer">
+						<div class="minicart-total">
+							Cart Subtotal <span class="amount">&pound;<?php echo $totalBasket['total']; ?></span>
+						</div>
 						<div class="minicart-actions clearfix">
-							<a class="button no-item-button" href="#">
-								<span class="text">Go to the shop</span>
+							<a class="viewcart-button button" href="#">
+								<span class="text">View Cart</span>
+							</a>
+							<a class="checkout-button button" href="#">
+								<span class="text">Checkout</span>
 							</a>
 						</div>
 					</div>
